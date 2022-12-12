@@ -28,7 +28,7 @@ function PageHead() {
       />
       <meta
         name='keywords'
-        content='MongoDB, Next.js, React, React Query, Tailwind'
+        content='Next.js, Prisma, React, React Query, SQL, SQLite,Tailwind'
       />
     </Head>
   );

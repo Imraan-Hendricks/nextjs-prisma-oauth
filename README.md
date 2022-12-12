@@ -21,8 +21,8 @@ These concepts will be the foundation for the newly released version of Next.js 
 
 ### Key Technologies:
 
-- MongoDB: Document-oriented database classified as NoSql.
 - Next.js: An open-source React front-end development web framework.
+- Prisma: A Node.js and TypeScript ORM for various database solutions.
 - React Query: Performant and powerful data synchronization for React.
 - Tailwindcss: A utility-first CSS framework.
 
@@ -30,7 +30,6 @@ These concepts will be the foundation for the newly released version of Next.js 
 
 ### Requirements:
 
-- MongoDB Version 4.x
 - Node.js Version 16.x
 
 <br/>
@@ -49,7 +48,7 @@ In the root directory, you can run:
 
 ### Environment Variables:
 
-Setup environment variables by creating .env.development.local file in the root directory. An example of this file is provided called .env.local.example. Note that in production you would want to set up environment variables on the host server.
+Setup environment variables by creating .env.development.local file in the root directory and .env file in the prisma directory. Examples of these files are provided in their respective locations. Note that in production you would want to set up environment variables on the host server.
 
 <br />
 

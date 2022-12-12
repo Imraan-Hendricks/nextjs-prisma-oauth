@@ -12,9 +12,6 @@ export const NODEMAILER_PASSWORD = process.env.NODEMAILER_PASSWORD as string;
 export const SERVER_BASE_URL = process.env.SERVER_BASE_URL as string;
 export const UPLOADS_DIRECTORY = process.env.UPLOADS_DIRECTORY as string;
 
-export const DB_NAME = process.env.DB_NAME as string;
-export const MONGO_URI = process.env.MONGO_URI as string;
-
 export const COOKIE_NAME = process.env.COOKIE_NAME as string;
 export const SESSION_SECRET = process.env.SESSION_SECRET as string;
 
