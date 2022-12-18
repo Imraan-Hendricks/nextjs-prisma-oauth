@@ -1,6 +1,6 @@
 {
   "name": "next.js-v12-closure",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Imraan-Hendricks",
   "description": "A conclusion to Next.js v12 that intends to consolidate the best ideas and practices up to this point",
   "private": true,
@@ -19,6 +19,8 @@
     "@types/node": "18.11.11",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^1.2.1",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
     "iron-session": "^6.3.1",
@@ -26,9 +28,12 @@
     "nodemailer": "^6.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.40.0",
+    "react-query": "^3.39.2",
     "typescript": "4.9.4"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/nodemailer": "^6.4.6",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.19",

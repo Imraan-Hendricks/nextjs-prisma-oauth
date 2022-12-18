@@ -1,3 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .text-h1 {
+    @apply font-light text-7xl sm:text-8xl leading-[1.167] tracking-[-0.01562em];
+  }
+
+  .text-h1-bold {
+    @apply text-h1 font-normal;
+  }
+
+  .text-h2 {
+    @apply font-light text-5xl sm:text-6xl leading-[1.2] tracking-[-0.00833em];
+  }
+
+  .text-h2-bold {
+    @apply text-h2 font-normal;
+  }
+
+  .text-h3 {
+    @apply font-normal text-4xl sm:text-5xl leading-[1.167] tracking-[0em];
+  }
+
+  .text-h3-bold {
+    @apply text-h3 font-medium;
+  }
+
+  .text-h4 {
+    @apply font-normal text-3xl sm:text-[2.125rem] leading-[1.235] tracking-[0.00735em];
+  }
+
+  .text-h4-bold {
+    @apply text-h4 font-medium;
+  }
+
+  .text-h5 {
+    @apply font-normal text-xl sm:text-2xl leading-[1.334] tracking-[0em];
+  }
+
+  .text-h5-bold {
+    @apply text-h5 font-medium;
+  }
+
+  .text-h6 {
+    @apply font-medium text-lg sm:text-xl leading-[1.6] tracking-[0.0075em];
+  }
+
+  .text-h6-bold {
+    @apply text-h6 font-bold;
+  }
+
+  .text-subtitle1 {
+    @apply font-normal text-base sm:text-lg leading-[1.75] tracking-[0.00938em];
+  }
+
+  .text-subtitle1-bold {
+    @apply text-subtitle1 font-medium;
+  }
+
+  .text-subtitle2 {
+    @apply font-medium text-xs sm:text-[0.875rem] leading-[1.57] tracking-[0.00714em];
+  }
+
+  .text-subtitle2-bold {
+    @apply text-subtitle2 font-bold;
+  }
+
+  .text-body1 {
+    @apply font-normal text-sm sm:text-base leading-[1.5] tracking-[0.00938em];
+  }
+
+  .text-body1-bold {
+    @apply text-body1 font-medium;
+  }
+
+  .text-body2 {
+    @apply font-normal text-xs sm:text-[0.875rem] leading-[1.43] tracking-[0.01071em];
+  }
+
+  .text-body2-bold {
+    @apply text-body2 font-medium;
+  }
+
+  .text-button {
+    @apply font-medium text-xs sm:text-[0.875rem] leading-[1.75] tracking-[0.02857em];
+  }
+
+  .text-button-bold {
+    @apply text-button font-bold;
+  }
+
+  .text-caption {
+    @apply font-normal text-[0.65rem] sm:text-xs leading-[1.66] tracking-[0.03333em];
+  }
+
+  .text-caption-bold {
+    @apply text-caption font-medium;
+  }
+
+  .text-overline {
+    @apply font-normal text-[0.65rem] sm:text-xs leading-[2.66] tracking-[0.08333em];
+  }
+
+  .text-overline-bold {
+    @apply text-overline font-medium;
+  }
+}

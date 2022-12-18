@@ -1,8 +1,8 @@
-import { Footer } from '../sections/Footer';
-import { Header } from '../sections/Header';
+import { Footer } from './Footer';
+import { Header } from './Header';
 import { PropsWithChildren } from 'react';
 
-export function MarketingLayout({ children }: PropsWithChildren<unknown>) {
+export default function Layout({ children }: PropsWithChildren<unknown>) {
   return (
     <div className='flex flex-col h-screen'>
       <header>
