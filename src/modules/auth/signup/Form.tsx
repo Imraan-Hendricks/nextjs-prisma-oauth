@@ -2,11 +2,89 @@ import Link from 'next/link';
 import { Button } from '../../../components/Button';
 import { ChangeEvent, useState } from 'react';
 import { Checkbox } from '../../../components/Checkbox';
+import { signup, SignupData } from './api/adapter';
 import { TextField } from '../../../components/TextField';
-import { useSignup } from '../api/signup/post/hook';
+import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import { useSession } from '../session/SessionContext';
 
 export function Form() {
-  const { fields, isLoading, onSubmit } = useSignup();
+  const { setSession, setStatus } = useSession();
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<SignupData>({
+    //resolver: useValidation(signupValidation()),
+  });
+
+  const mutation = useMutation(signup, {
+    onError: (error: any) => alert(error.message),
+    onSuccess: async (user) => {
+      setSession({ user });
+      setStatus('authenticated');
+    },
+  });
+
+  const onSubmit = handleSubmit((data) => mutation.mutate(data));
+
+  const fields = [
+    {
+      helperText: errors.username?.message,
+      id: 'username',
+      isError: !!errors.username?.message,
+      label: 'Username',
+      placeholder: 'Enter username',
+      required: true,
+      ...register('username'),
+    },
+    {
+      helperText: errors.email?.message,
+      id: 'email',
+      isError: !!errors.email?.message,
+      label: 'Email',
+      placeholder: 'Enter email',
+      required: true,
+      ...register('email'),
+    },
+    {
+      helperText: errors.firstName?.message,
+      id: 'firstName',
+      isError: !!errors.firstName?.message,
+      label: 'First name',
+      placeholder: 'Enter first name',
+      required: true,
+      ...register('firstName'),
+    },
+    {
+      helperText: errors.lastName?.message,
+      id: 'lastName',
+      isError: !!errors.lastName?.message,
+      label: 'Last name',
+      placeholder: 'Enter last name',
+      required: true,
+      ...register('lastName'),
+    },
+    {
+      helperText: errors.contactNumber?.message,
+      id: 'contactNumber',
+      isError: !!errors.contactNumber?.message,
+      label: 'Contact number',
+      placeholder: 'Enter contact number',
+      ...register('contactNumber'),
+    },
+    {
+      helperText: errors.password?.message,
+      id: 'password',
+      isError: !!errors.password?.message,
+      label: 'Password',
+      placeholder: 'Enter password',
+      required: true,
+      type: 'password',
+      ...register('password'),
+    },
+  ] as const;
 
   const [disabled, setDisabled] = useState(true);
   const handleCheckboxOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,8 +140,8 @@ export function Form() {
             </Checkbox>
             <Button
               className='lg:col-span-2'
-              disabled={disabled || isLoading}
-              loading={isLoading}>
+              disabled={disabled || mutation.isLoading}
+              loading={mutation.isLoading}>
               Subscribe
             </Button>
           </form>

@@ -1,3 +1,3 @@
-import Home from '../modules/(marketing)/(home)/page';
+import Home from '../modules/(marketing)/(home)';
 
 export default Home;

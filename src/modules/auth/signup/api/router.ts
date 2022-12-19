@@ -1,12 +1,14 @@
 import {
   GenericError,
   NotAcceptableError,
-} from '../../../../../utils/error-utils';
+} from '../../../../utils/error-utils';
 import { hash } from 'bcryptjs';
+import { handler } from '../../../../utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../../../utils/db-utils';
+import { prisma } from '../../../../utils/db-utils';
 import { SignupData } from './adapter';
 import { User } from '@prisma/client';
+import { withSessionRoute } from '../../../../utils/session-utils';
 
 interface SignupRequest extends NextApiRequest {
   body: SignupData;
@@ -14,7 +16,7 @@ interface SignupRequest extends NextApiRequest {
 
 type SignupResponse = NextApiResponse<User | GenericError>;
 
-export async function signup(req: SignupRequest, res: SignupResponse) {
+async function signup(req: SignupRequest, res: SignupResponse) {
   // validate signup data
 
   const { password, confirmPassword, ...newUser } = req.body;
@@ -35,3 +37,5 @@ export async function signup(req: SignupRequest, res: SignupResponse) {
 
   res.status(200).json(user);
 }
+
+export default withSessionRoute(handler({ POST: signup }));

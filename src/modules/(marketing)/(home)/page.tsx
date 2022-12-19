@@ -1,16 +1,11 @@
-import Head from './head';
-import Layout from '../layout';
 import { Hero } from './Hero';
 
-export default function Home() {
+export default function Page() {
   return (
-    <div>
-      <Head />
-      <Layout>
-        <section>
-          <Hero />
-        </section>
-      </Layout>
-    </div>
+    <>
+      <section>
+        <Hero />
+      </section>
+    </>
   );
 }
