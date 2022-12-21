@@ -1,12 +1,13 @@
 import {
   GenericError,
   NotAcceptableError,
+  ValidationError,
 } from '../../../../utils/error-utils';
-import { hash } from 'bcryptjs';
 import { handler } from '../../../../utils/api-utils';
+import { hash } from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../../utils/db-utils';
-import { SignupData } from './adapter';
+import { SignupData, SignupSchema } from './adapter';
 import { User } from '@prisma/client';
 import { withSessionRoute } from '../../../../utils/session-utils';
 
@@ -17,14 +18,16 @@ interface SignupRequest extends NextApiRequest {
 type SignupResponse = NextApiResponse<User | GenericError>;
 
 async function signup(req: SignupRequest, res: SignupResponse) {
-  // validate signup data
+  const result = SignupSchema.safeParse(req.body);
+  if (!result.success)
+    throw new ValidationError<SignupData>('body', result.error);
 
-  const { password, confirmPassword, ...newUser } = req.body;
+  const { password, confirmPassword, ...newUser } = result.data;
 
-  const userExists = await prisma.user.findFirst({
+  const emailExists = !!(await prisma.user.findFirst({
     where: { email: newUser.email },
-  });
-  if (userExists) throw new NotAcceptableError('Email already exists');
+  }));
+  if (emailExists) throw new NotAcceptableError('Email already exists');
 
   const hashedPassword = await hash(password, 10);
 

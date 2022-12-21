@@ -1,3 +1,5 @@
+import { ZodError } from 'zod/lib';
+
 export class GenericError extends Error {
   name = 'GenericError';
   status = 500;
@@ -97,13 +99,6 @@ export class UnauthorizedError extends GenericError {
   }
 }
 
-export interface Errors {
-  [keys: string]: {
-    type: string;
-    message: string;
-  };
-}
-
 export type Location =
   | 'body'
   | 'cookies'
@@ -112,14 +107,14 @@ export type Location =
   | 'query'
   | 'unknown';
 
-export class ValidationError extends GenericError {
+export class ValidationError<T> extends GenericError {
   name = 'ValidationError';
   status = 400;
   message = 'Invalid data in request.';
   location: Location;
-  errors: Errors;
+  errors: ZodError<T>;
 
-  constructor(location: Location, errors: Errors, message?: string) {
+  constructor(location: Location, errors: ZodError<T>, message?: string) {
     super(message);
     this.location = location;
     this.errors = errors;

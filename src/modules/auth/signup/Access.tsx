@@ -1,7 +1,7 @@
 import { Loading } from '../../../components/Loading';
 import { PropsWithChildren } from 'react';
 import { Redirect } from '../../../components/Redirect';
-import { useSession } from '../session/SessionContext';
+import { useSession } from '../session/Context';
 
 export function Access({ children }: PropsWithChildren<unknown>) {
   const { session, status } = useSession();

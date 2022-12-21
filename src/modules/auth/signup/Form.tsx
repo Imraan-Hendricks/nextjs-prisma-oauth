@@ -2,11 +2,12 @@ import Link from 'next/link';
 import { Button } from '../../../components/Button';
 import { ChangeEvent, useState } from 'react';
 import { Checkbox } from '../../../components/Checkbox';
-import { signup, SignupData } from './api/adapter';
+import { resolver } from '../../../utils/validation-utils';
+import { signup, SignupData, SignupSchema } from './api/adapter';
 import { TextField } from '../../../components/TextField';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useSession } from '../session/SessionContext';
+import { useSession } from '../session/Context';
 
 export function Form() {
   const { setSession, setStatus } = useSession();
@@ -16,7 +17,7 @@ export function Form() {
     handleSubmit,
     register,
   } = useForm<SignupData>({
-    //resolver: useValidation(signupValidation()),
+    resolver: resolver(SignupSchema),
   });
 
   const mutation = useMutation(signup, {

@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { SessionProvider } from '../modules/auth/session/SessionContext';
+import { SessionProvider } from '../modules/auth/session/Context';
 
 const queryClient = new QueryClient();
 

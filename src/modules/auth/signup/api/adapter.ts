@@ -1,3 +1,4 @@
+import { optional, schema, validate } from '../../../../utils/validation-utils';
 import { User } from '@prisma/client';
 
 export interface SignupData {
@@ -9,6 +10,26 @@ export interface SignupData {
   password: string;
   confirmPassword?: string;
 }
+
+export const SignupSchema = schema
+  .object({
+    username: validate.user.username,
+    firstName: validate.user.firstName,
+    lastName: validate.user.lastName,
+    email: validate.user.email,
+    contactNumber: optional(validate.user.contactNumber),
+    password: validate.auth.password,
+    confirmPassword: optional(validate.auth.confirmPassword),
+  })
+  .refine(
+    (data) =>
+      data.confirmPassword === undefined ||
+      data.password === data.confirmPassword,
+    {
+      message: "Passwords don't match",
+      path: ['confirmPassword'],
+    }
+  );
 
 export const signup = async (data: SignupData) => {
   const res = await fetch('/api/auth/signup', {

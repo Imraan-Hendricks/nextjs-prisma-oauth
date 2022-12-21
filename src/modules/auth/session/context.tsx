@@ -1,7 +1,6 @@
 import {
   createContext,
   Dispatch,
-  FC,
   PropsWithChildren,
   SetStateAction,
   useContext,
@@ -41,9 +40,7 @@ export const useSession = () => {
   return context;
 };
 
-export const SessionProvider: FC<PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export function SessionProvider({ children }: PropsWithChildren<unknown>) {
   const [status, setStatus] = useState<Status>('loading');
   const [session, setSession] = useState<Session>({ user: undefined });
 
@@ -63,4 +60,4 @@ export const SessionProvider: FC<PropsWithChildren<unknown>> = ({
       {children}
     </SessionContext.Provider>
   );
-};
+}
