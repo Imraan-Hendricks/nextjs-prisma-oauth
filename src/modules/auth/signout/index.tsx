@@ -1,16 +1,15 @@
 import Head from './head';
-import Layout from '../layout';
 import Page from './page';
 import { Access } from './Access';
 
-export default function Home() {
+export default function Signout() {
   return (
     <Access>
       <div>
         <Head />
-        <Layout>
+        <main>
           <Page />
-        </Layout>
+        </main>
       </div>
     </Access>
   );

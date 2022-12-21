@@ -1,6 +1,6 @@
 {
   "name": "next.js-v12-closure",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Imraan-Hendricks",
   "description": "A conclusion to Next.js v12 that intends to consolidate the best ideas and practices up to this point",
   "private": true,
@@ -15,6 +15,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@prisma/client": "^4.7.1",
     "@types/node": "18.11.11",

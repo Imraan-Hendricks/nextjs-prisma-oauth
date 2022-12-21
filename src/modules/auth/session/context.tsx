@@ -11,7 +11,7 @@ import {
   Session,
   sessionQueryKey,
   sessionQueryOptions,
-} from './api/adapter';
+} from '../api/session/adapter';
 import {
   QueryObserverResult,
   RefetchOptions,
