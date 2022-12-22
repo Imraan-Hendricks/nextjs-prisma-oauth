@@ -38,6 +38,10 @@ const auth = {
   updatedAt: z.date(),
 };
 
+const misc = {
+  anyString: z.string(),
+};
+
 export const optional = (validation: ZodString | ZodEffects<ZodString>) => {
   return z
     .union([validation, z.string().length(0)])
@@ -47,4 +51,4 @@ export const optional = (validation: ZodString | ZodEffects<ZodString>) => {
 
 export const resolver = zodResolver;
 export const schema = z;
-export const validate = { auth, user };
+export const validate = { auth, user, misc };
