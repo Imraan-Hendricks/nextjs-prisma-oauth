@@ -1,8 +1,4 @@
-import {
-  GenericError,
-  InternalServerError,
-  NotFoundError,
-} from './error-utils';
+import { GenericError, InternalServerError, NotFoundError } from './error';
 import { NextApiHandler } from 'next';
 
 interface Methods {

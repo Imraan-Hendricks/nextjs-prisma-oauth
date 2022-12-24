@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer';
-import { InternalServerError } from './error-utils';
+import { InternalServerError } from './error';
 import {
   NODEMAILER_HOST,
   NODEMAILER_SECURE,
   NODEMAILER_PORT,
   NODEMAILER_USER,
   NODEMAILER_PASSWORD,
-} from './env-utils';
+} from './env';
 
 export const transporter = nodemailer.createTransport({
   host: NODEMAILER_HOST,

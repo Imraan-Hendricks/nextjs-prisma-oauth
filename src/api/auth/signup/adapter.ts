@@ -1,5 +1,6 @@
-import { optional, schema, validate } from '../../../../utils/validation-utils';
+import { optional, schema, validate } from '../../../utils/validation';
 import { User } from '@prisma/client';
+import { ValidationError } from '../../../utils/error';
 
 export interface SignupData {
   username: string;
@@ -30,6 +31,13 @@ export const SignupSchema = schema
       path: ['confirmPassword'],
     }
   );
+
+export function validateSignupData(data: any) {
+  const result = SignupSchema.safeParse(data);
+  if (!result.success)
+    throw new ValidationError<SignupData>('body', result.error);
+  return result.data;
+}
 
 export const signup = async (data: SignupData) => {
   const res = await fetch('/api/auth/signup', {

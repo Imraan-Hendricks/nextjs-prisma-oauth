@@ -1,8 +1,12 @@
-import { resolver } from '../../../../utils/validation-utils';
-import { signin, SigninData, SigninSchema } from '../../api/signin/adapter';
+import { resolver } from '../../../../utils/validation';
+import {
+  signin,
+  SigninData,
+  SigninSchema,
+} from '../../../../api/auth/signin/adapter';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useSession } from '../../session/Context';
+import { useSession } from '../../../../context/Session';
 
 export function useSignup() {
   const { setSession, setStatus } = useSession();

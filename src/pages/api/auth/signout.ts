@@ -1,3 +1,3 @@
-import signout from '../../../modules/auth/api/signout/router';
+import signout from '../../../api/auth/signout/router';
 
 export default signout;

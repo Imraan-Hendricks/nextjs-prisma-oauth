@@ -1,10 +1,11 @@
-import { handler } from '../../../../utils/api-utils';
+import { getSession as getSesh } from '../../../services/auth';
+import { handler } from '../../../utils/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from './adapter';
-import { withSessionRoute } from '../../../../utils/session-utils';
+import { withSessionRoute } from '../../../utils/session';
 
 function getSession(req: NextApiRequest, res: NextApiResponse<Session>) {
-  const session = { user: req.session.user };
+  const session = getSesh(req);
   res.status(200).json(session);
 }
 

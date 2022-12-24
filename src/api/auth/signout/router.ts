@@ -1,9 +1,10 @@
-import { handler } from '../../../../utils/api-utils';
+import { handler } from '../../../utils/api';
+import { logout } from '../../../services/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { withSessionRoute } from '../../../../utils/session-utils';
+import { withSessionRoute } from '../../../utils/session';
 
 function signout(req: NextApiRequest, res: NextApiResponse) {
-  req.session.destroy();
+  logout(req);
   res.status(204).send(undefined);
 }
 

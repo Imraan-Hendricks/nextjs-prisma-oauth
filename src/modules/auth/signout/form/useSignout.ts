@@ -1,7 +1,7 @@
-import { signout } from '../../api/signout/adapter';
+import { signout } from '../../../../api/auth/signout/adapter';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
-import { useSession } from '../../session/Context';
+import { useSession } from '../../../../context/Session';
 
 export function useSignout() {
   const { back } = useRouter();

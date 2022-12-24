@@ -1,4 +1,4 @@
-import { COOKIE_NAME, SESSION_SECRET } from './env-utils';
+import { COOKIE_NAME, SESSION_SECRET } from './env';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 
