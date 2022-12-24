@@ -6,7 +6,8 @@ import {
   NotAcceptableError,
 } from '../utils/error';
 import { NextApiRequest } from 'next';
-import { Provider } from '../utils/constant';
+import { OAuthProvider, Provider } from '../utils/constant';
+import { Profile } from 'passport';
 import { User } from '@prisma/client';
 
 export async function comparePassword(password: string, hash: string) {
@@ -51,3 +52,25 @@ export async function login(req: NextApiRequest, user: User) {
 export function logout(req: NextApiRequest) {
   req.session.destroy();
 }
+
+export const processProfile = (profile: Profile) => {
+  if (
+    !profile.displayName ||
+    !profile.name?.givenName ||
+    !profile.name?.familyName ||
+    !profile.emails ||
+    !profile.emails[0].value ||
+    !profile.provider ||
+    !profile.id
+  )
+    throw new InternalServerError('Failed to process profile');
+
+  return {
+    username: profile.displayName,
+    firstName: profile.name.givenName,
+    lastName: profile.name.familyName,
+    email: profile.emails[0].value,
+    provider: profile.provider as OAuthProvider,
+    providerId: profile.id,
+  };
+};

@@ -4,7 +4,30 @@ import {
   NoRecordError,
   NotAcceptableError,
 } from '../utils/error';
+import { OAuthProvider } from '../utils/constant';
 import { prisma } from '../utils/db';
+
+export async function createOAuthUser(data: {
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  contactNumber?: string | undefined;
+  provider: OAuthProvider;
+  providerId: string;
+}) {
+  try {
+    const { provider, providerId, ...rest } = data;
+    const user = await prisma.user.create({
+      data: { ...rest, auth: { create: { provider, providerId } } },
+    });
+
+    return user;
+  } catch (error) {
+    if (error instanceof GenericError) throw error;
+    throw new InternalServerError();
+  }
+}
 
 export async function createUser(data: {
   username: string;
@@ -33,6 +56,17 @@ export async function isUniqueEmail(email: string) {
       where: { email },
     }));
     if (emailExists) throw new NotAcceptableError('Email already exists');
+  } catch (error) {
+    if (error instanceof GenericError) throw error;
+    throw new InternalServerError();
+  }
+}
+
+export async function getUserByEmail(email: string) {
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) throw new NoRecordError('User does not exist!');
+    return user;
   } catch (error) {
     if (error instanceof GenericError) throw error;
     throw new InternalServerError();

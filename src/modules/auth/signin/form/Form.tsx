@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Button } from '../../../../components/Button';
+import { Divider } from '../../../../components/Divider';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+import { Oauth } from './OAuth/OAuth';
 import { TextField } from '../../../../components/TextField';
 import { useSignup } from './useSignin';
 
@@ -32,6 +34,8 @@ export function Form() {
               Sign In
             </Button>
           </form>
+          <Divider className='my-4'>Or continue with</Divider>
+          <Oauth />
         </div>
       </div>
     </div>

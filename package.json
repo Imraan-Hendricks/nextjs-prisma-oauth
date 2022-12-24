@@ -1,6 +1,6 @@
 {
   "name": "next.js-v12-closure",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "author": "Imraan-Hendricks",
   "description": "A conclusion to Next.js v12 that intends to consolidate the best ideas and practices up to this point",
   "private": true,
@@ -15,6 +15,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@prisma/client": "^4.7.1",
@@ -28,6 +33,9 @@
     "iron-session": "^6.3.1",
     "next": "13.0.6",
     "nodemailer": "^6.8.0",
+    "passport": "^0.6.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.40.0",
@@ -38,6 +46,9 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/nodemailer": "^6.4.6",
+    "@types/passport": "^1.0.11",
+    "@types/passport-facebook": "^2.1.11",
+    "@types/passport-google-oauth20": "^2.0.11",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.19",
     "prisma": "^4.7.1",

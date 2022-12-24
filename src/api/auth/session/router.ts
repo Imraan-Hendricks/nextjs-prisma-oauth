@@ -1,11 +1,11 @@
-import { getSession as getSesh } from '../../../services/auth';
+import { getSession as handleGetSession } from '../../../services/auth';
 import { handler } from '../../../utils/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from './adapter';
 import { withSessionRoute } from '../../../utils/session';
 
 function getSession(req: NextApiRequest, res: NextApiResponse<Session>) {
-  const session = getSesh(req);
+  const session = handleGetSession(req);
   res.status(200).json(session);
 }
 
