@@ -90,3 +90,16 @@ export async function getUserInclAuthByEmail(email: string) {
     throw new InternalServerError();
   }
 }
+
+export async function updateNewUser(id: string) {
+  try {
+    const user = await prisma.user.update({
+      data: { newUser: false },
+      where: { id },
+    });
+    return user;
+  } catch (error) {
+    if (error instanceof GenericError) throw error;
+    throw new InternalServerError();
+  }
+}
