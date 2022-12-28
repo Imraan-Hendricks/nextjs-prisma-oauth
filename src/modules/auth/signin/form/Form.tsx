@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '../../../../components/Button';
 import { Divider } from '../../../../components/Divider';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
-import { Oauth } from './OAuth/OAuth';
+import { Oauth } from './oauth/OAuth';
 import { TextField } from '../../../../components/TextField';
 import { useSignup } from './useSignin';
 
