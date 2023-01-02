@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { updateNewUser } from '../../../../api/auth/new-user/adapter';
+import { updateAuthUser } from '../../../../api/auth/user/adapter';
 import { useSession } from '../../../../context/Session';
 
-export function useUpdateNewUser() {
+export function useUpdateAuthUser() {
   const { setSession, setStatus } = useSession();
 
   const { handleSubmit } = useForm();
 
-  const mutation = useMutation(updateNewUser, {
+  const mutation = useMutation(updateAuthUser, {
     onError: (error: any) => alert(error.message),
     onSuccess: async (user) => {
       setSession({ user });
@@ -16,7 +16,9 @@ export function useUpdateNewUser() {
     },
   });
 
-  const onSubmit = handleSubmit((data) => mutation.mutate(data));
+  const onSubmit = handleSubmit((data) =>
+    mutation.mutate({ ...data, newUser: false })
+  );
 
   return { isLoading: mutation.isLoading, onSubmit };
 }

@@ -1,10 +1,10 @@
 import { Button } from '../../../../components/Button';
 import { useSession } from '../../../../context/Session';
-import { useUpdateNewUser } from './useUpdateNewUser';
+import { useUpdateAuthUser } from './useUpdateAuthUser';
 
 export function Form() {
   const { session } = useSession();
-  const { isLoading, onSubmit } = useUpdateNewUser();
+  const { isLoading, onSubmit } = useUpdateAuthUser();
 
   return (
     <div className='flex justify-center items-center h-screen bg-gray-50'>

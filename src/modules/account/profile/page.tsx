@@ -1,7 +1,25 @@
+import { Form } from './form/Form';
+import { Info } from './info/Info';
+import { UpdateForm } from './form/useUpdateAuthUser';
+import { useClickAwayListener } from '../../../hooks/useClickAwayListener';
+import { useRef, useState } from 'react';
+
 export default function Page() {
+  const [updateForm, setUpdateForm] = useState<UpdateForm>();
+
+  const ref = useRef<HTMLDivElement | null>(null);
+  useClickAwayListener(ref, () => setUpdateForm(undefined));
+
   return (
     <>
-      <section>Proflie</section>
+      <section>
+        <Info setUpdateForm={setUpdateForm} />
+      </section>
+      {updateForm && (
+        <div ref={ref} className='fixed left-0 bottom-0 w-full bg-gray-50'>
+          <Form updateForm={updateForm} setUpdateForm={setUpdateForm} />
+        </div>
+      )}
     </>
   );
 }

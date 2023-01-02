@@ -91,10 +91,18 @@ export async function getUserInclAuthByEmail(email: string) {
   }
 }
 
-export async function updateNewUser(id: string) {
+export interface UpdateableUserData {
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  contactNumber?: string;
+  newUser?: boolean;
+}
+
+export async function updateUserById(id: string, data: UpdateableUserData) {
   try {
     const user = await prisma.user.update({
-      data: { newUser: false },
+      data,
       where: { id },
     });
     return user;

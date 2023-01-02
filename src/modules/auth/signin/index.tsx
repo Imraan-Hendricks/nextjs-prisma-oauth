@@ -2,7 +2,7 @@ import Head from './head';
 import Page from './page';
 import { Access } from './Access';
 
-export default function Signout() {
+export default function Signin() {
   return (
     <Access>
       <div>
