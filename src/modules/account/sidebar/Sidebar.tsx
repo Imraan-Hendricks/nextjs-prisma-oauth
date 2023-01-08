@@ -6,13 +6,21 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
 import { Avatar } from './avatar/Avatar';
+import { Bars } from './bars/Bars';
+import { clsx } from 'clsx';
 import { Menu } from './menu/Menu';
+import { useState } from 'react';
 
 export function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className='grid gap-8 py-8 h-max'>
-      <Avatar />
-      <div className='grid gap-4'>
+    <div className='grid gap-8 py-4 sm:py-8 h-max'>
+      <div className='flex justify-between items-center'>
+        <Avatar />
+        <Bars isOpen={isOpen} setIsOpen={setIsOpen} />
+      </div>
+      <div className={clsx('grid gap-4', !isOpen && 'hidden sm:block')}>
         <Menu
           items={[
             { Icon: HomeIcon, name: 'Home', href: '/' },
