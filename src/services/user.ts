@@ -50,6 +50,19 @@ export async function createUser(data: {
   }
 }
 
+export async function deleteUserById(id: string) {
+  try {
+    const deleteAuth = prisma.auth.delete({ where: { userId: id } });
+    const deleteUser = prisma.user.delete({ where: { id } });
+    const { 1: user } = await prisma.$transaction([deleteAuth, deleteUser]);
+
+    return user;
+  } catch (error) {
+    if (error instanceof GenericError) throw error;
+    throw new InternalServerError();
+  }
+}
+
 export async function isUniqueEmail(email: string) {
   try {
     const emailExists = !!(await prisma.user.findFirst({

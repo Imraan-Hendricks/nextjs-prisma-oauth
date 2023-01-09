@@ -3,6 +3,16 @@ import { UpdateableUserData } from '../../../services/user';
 import { User } from '@prisma/client';
 import { ValidationError } from '../../../utils/error';
 
+export const deleteAuthUser = async () => {
+  const res = await fetch('/api/auth/user', {
+    method: 'DELETE',
+    headers: { Accept: 'application/json' },
+  });
+  if (!res.ok) throw await res.json();
+  const user: User = await res.json();
+  return user;
+};
+
 export const UpdateableUserDataSchema = schema.object({
   username: optional(validate.user.username),
   firstName: optional(validate.user.firstName),

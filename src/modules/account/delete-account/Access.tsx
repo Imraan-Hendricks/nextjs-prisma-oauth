@@ -7,7 +7,7 @@ export function Access({ children }: PropsWithChildren<unknown>) {
   const { session, status } = useSession();
 
   if (status === 'loading') return <Loading />;
-  if (status === 'unauthenticated') return <Redirect to='/auth/signin' />;
+  if (status === 'unauthenticated') return <Redirect to='/' />;
   if (status === 'authenticated' && session.user) {
     if (session.user.newUser) return <Redirect to='/auth/new-user' />;
   }
