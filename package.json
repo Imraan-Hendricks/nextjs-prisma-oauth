@@ -1,6 +1,6 @@
 {
   "name": "next.js-v12-closure",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "author": "Imraan-Hendricks",
   "description": "A conclusion to Next.js v12 that intends to consolidate the best ideas and practices up to this point",
   "private": true,
@@ -31,6 +31,7 @@
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
     "iron-session": "^6.3.1",
+    "multer": "^1.4.5-lts.1",
     "next": "13.0.6",
     "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/multer": "^1.4.7",
     "@types/nodemailer": "^6.4.6",
     "@types/passport": "^1.0.11",
     "@types/passport-facebook": "^2.1.11",

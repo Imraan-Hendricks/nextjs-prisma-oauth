@@ -1,7 +1,7 @@
 import { Button } from '../../../../components/Button';
 import { Dispatch, SetStateAction } from 'react';
 import { TextField } from '../../../../components/TextField';
-import { UpdateForm, useUpdateAuthUser } from './useUpdateAuthUser';
+import { UpdateForm, useUpdateUserBySID } from './useUpdateUserBySID';
 
 interface FormProps {
   updateForm: UpdateForm;
@@ -9,7 +9,7 @@ interface FormProps {
 }
 
 export function Form({ updateForm, setUpdateForm }: FormProps) {
-  const { fields, isLoading, onSubmit } = useUpdateAuthUser({
+  const { fields, isLoading, onSubmit } = useUpdateUserBySID({
     updateForm,
     setUpdateForm,
   });

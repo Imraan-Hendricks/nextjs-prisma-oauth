@@ -1,11 +1,11 @@
-import { deleteAuthUser } from '../../../../api/auth/user/adapter';
+import { deleteUserBySID } from '../../../../api/users/sid/adapter';
 import { useMutation } from 'react-query';
 import { useSession } from '../../../../context/Session';
 
-export function useDeleteAuthUser() {
+export function useDeleteUserBySID() {
   const { setSession, setStatus } = useSession();
 
-  const mutation = useMutation(deleteAuthUser, {
+  const mutation = useMutation(deleteUserBySID, {
     onError: (error: any) => alert(error.message),
     onSuccess: async () => {
       setSession({ user: undefined });

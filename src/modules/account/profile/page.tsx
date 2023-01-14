@@ -1,6 +1,6 @@
 import { Form } from './form/Form';
 import { Info } from './info/Info';
-import { UpdateForm } from './form/useUpdateAuthUser';
+import { UpdateForm } from './form/useUpdateUserBySID';
 import { useClickAwayListener } from '../../../hooks/useClickAwayListener';
 import { useRef, useState } from 'react';
 

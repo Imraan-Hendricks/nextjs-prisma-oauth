@@ -105,6 +105,7 @@ export async function getUserInclAuthByEmail(email: string) {
 }
 
 export interface UpdateableUserData {
+  avatar?: string;
   username?: string;
   firstName?: string;
   lastName?: string;

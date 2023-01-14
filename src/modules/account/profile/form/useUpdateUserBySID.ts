@@ -5,8 +5,8 @@ import { useMutation } from 'react-query';
 import { UpdateableUserData } from '../../../../services/user';
 import {
   UpdateableUserDataSchema,
-  updateAuthUser,
-} from '../../../../api/auth/user/adapter';
+  updateUserBySID,
+} from '../../../../api/users/sid/adapter';
 import { useSession } from '../../../../context/Session';
 
 export type UpdateForm =
@@ -16,15 +16,15 @@ export type UpdateForm =
   | 'contactNumber'
   | undefined;
 
-interface UseUpdateAuthUserProps {
+interface UseUpdateUserBySIDProps {
   updateForm: UpdateForm;
   setUpdateForm: Dispatch<SetStateAction<UpdateForm | undefined>>;
 }
 
-export function useUpdateAuthUser({
+export function useUpdateUserBySID({
   updateForm,
   setUpdateForm,
-}: UseUpdateAuthUserProps) {
+}: UseUpdateUserBySIDProps) {
   const { setSession, setStatus } = useSession();
 
   const {
@@ -35,7 +35,7 @@ export function useUpdateAuthUser({
     resolver: resolver(UpdateableUserDataSchema),
   });
 
-  const mutation = useMutation(updateAuthUser, {
+  const mutation = useMutation(updateUserBySID, {
     onError: (error: any) => alert(error.message),
     onSuccess: async (user) => {
       setSession({ user });

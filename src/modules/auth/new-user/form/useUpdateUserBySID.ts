@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { updateAuthUser } from '../../../../api/auth/user/adapter';
+import { updateUserBySID } from '../../../../api/users/sid/adapter';
 import { useSession } from '../../../../context/Session';
 
-export function useUpdateAuthUser() {
+export function useUpdateUserBySID() {
   const { setSession, setStatus } = useSession();
 
   const { handleSubmit } = useForm();
 
-  const mutation = useMutation(updateAuthUser, {
+  const mutation = useMutation(updateUserBySID, {
     onError: (error: any) => alert(error.message),
     onSuccess: async (user) => {
       setSession({ user });

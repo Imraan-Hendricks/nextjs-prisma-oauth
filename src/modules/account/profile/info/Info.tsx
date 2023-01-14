@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
-import { UpdateForm } from '../form/useUpdateAuthUser';
+import { UpdateForm } from '../form/useUpdateUserBySID';
 import { useSession } from '../../../../context/Session';
 
 interface InfoProps {

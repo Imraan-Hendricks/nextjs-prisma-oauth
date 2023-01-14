@@ -3,8 +3,8 @@ import { UpdateableUserData } from '../../../services/user';
 import { User } from '@prisma/client';
 import { ValidationError } from '../../../utils/error';
 
-export const deleteAuthUser = async () => {
-  const res = await fetch('/api/auth/user', {
+export const deleteUserBySID = async () => {
+  const res = await fetch('/api/users/sid', {
     method: 'DELETE',
     headers: { Accept: 'application/json' },
   });
@@ -28,8 +28,8 @@ export function validateUpdateableUserData(data: any) {
   return result.data;
 }
 
-export const updateAuthUser = async (data: UpdateableUserData) => {
-  const res = await fetch('/api/auth/user', {
+export const updateUserBySID = async (data: UpdateableUserData) => {
+  const res = await fetch('/api/users/sid', {
     method: 'PUT',
     headers: {
       Accept: 'application/json',

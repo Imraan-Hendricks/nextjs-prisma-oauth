@@ -1,7 +1,7 @@
 import { Button } from '../../../../components/Button';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { useClickAwayListener } from '../../../../hooks/useClickAwayListener';
-import { useDeleteAuthUser } from './useDeleteAuthUser';
+import { useDeleteUserBySID } from './useDeleteUserBySID';
 
 interface PromptProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -11,7 +11,7 @@ export function Prompt({ setIsOpen }: PromptProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   useClickAwayListener(ref, () => setIsOpen(false));
 
-  const { deleteUser, isLoading } = useDeleteAuthUser();
+  const { deleteUser, isLoading } = useDeleteUserBySID();
 
   return (
     <div ref={ref} className='bg-white p-8 grid gap-6 max-w-xl rounded-md'>
