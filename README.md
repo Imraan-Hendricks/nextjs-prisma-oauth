@@ -1,40 +1,25 @@
-# Next.js v12 Closure
+# Next.js Prisma OAuth
 
-A conclusion to Next.js v12 that intends to consolidate the best ideas and practices up to this point regarding the development of modern full stack web applications.
+The focus of this project is to showcase the implementation of authentication using Next.js and Prisma. It utilizes OAuth2 authentication providers such as Google and Facebook, alongside a local provider. The authentication process is implemented through Passport.js, making use of its robust and flexible authentication features.
 
-These concepts will be the foundation for the newly released version of Next.js and will be required to adapt, change or be completely rebuilt based on the new concepts and features provided by Next.js.
+The project includes sign-in, sign-out, and sign-up pages, as well as an account page where users can update their profile information. Data validation is also included to ensure that the form data submitted by users is valid, and feedback is provided to users if there are any errors.
 
-<br/>
+Additionally, the project includes a profile image upload functionality that automatically optimizes the size and aspect ratio of the uploaded image to ensure a performant and consistent user experience.
 
-### Features:
+New users will be redirected to a special page that allows you to collect additional information after the signup process if necessary.
 
-- Authentication
-- Authorization
-- Access control
-- Cookie-based sessions
-- Data validation
-- File uploads
-- Image optimization
-- Error handling
+### The project uses:
+
+- Iron Session to manage cookies in a serverless environment.
+- React Query for data fetching and mutations, which helps to strategically manage caching and provides an improved development experience.
+- Tailwind CSS as the styling solution for rapid prototyping, allowing for easy and efficient customization of the project's visual design.
+- Prisma with SQLite as the database backend to persistently store user data.
 
 <br />
 
-### Key Technologies:
-
-- Next.js: An open-source React front-end development web framework.
-- Prisma: A Node.js and TypeScript ORM for various database solutions.
-- React Query: Performant and powerful data synchronization for React.
-- Tailwindcss: A utility-first CSS framework.
-
-<br/>
-
-### Requirements:
-
-- Node.js Version 16.x
-
-<br/>
-
 ### NPM Scripts:
+
+---
 
 In the root directory, you can run:
 
@@ -46,9 +31,15 @@ In the root directory, you can run:
 
 ## Usage:
 
+---
+
+To get started, ensure that you have Node.js version 16.x or higher installed, then clone this repository and follow the instructions below to set up your environment and run the project locally.
+
+<br/>
+
 ### Environment Variables:
 
-Setup environment variables by creating .env.development.local file in the root directory and .env file in the prisma directory. Examples of these files are provided in their respective locations. Note that in production you would want to set up environment variables on the host server.
+To set up the required environment variables, create a .env.development.local file in the root directory and an .env file in the Prisma directory. Sample files are provided in their respective locations for reference. It should be noted that in a production environment, environment variables should be set up on the host server.
 
 <br />
 

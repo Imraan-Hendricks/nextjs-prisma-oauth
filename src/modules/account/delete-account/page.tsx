@@ -1,3 +1,4 @@
+import { CustomHead } from '@/components/CustomHead';
 import { Main } from './main/Main';
 import { Prompt } from './prompt/Prompt';
 import { useState } from 'react';
@@ -7,6 +8,7 @@ export default function Page() {
 
   return (
     <>
+      <CustomHead title='Delete Account' />
       <section>
         <Main setIsOpen={setIsOpen} />
       </section>

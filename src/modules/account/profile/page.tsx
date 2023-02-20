@@ -1,3 +1,4 @@
+import { CustomHead } from '@/components/CustomHead';
 import { Form } from './form/Form';
 import { Info } from './info/Info';
 import { UpdateForm } from './form/useUpdateUserBySID';
@@ -12,6 +13,7 @@ export default function Page() {
 
   return (
     <>
+      <CustomHead title='Profile' />
       <section>
         <Info setUpdateForm={setUpdateForm} />
       </section>
