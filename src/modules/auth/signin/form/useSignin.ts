@@ -5,11 +5,11 @@ import {
   SigninSchema,
 } from '../../../../api/auth/signin/adapter';
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { useSession } from '../../../../context/Session';
+import { useMutation } from '@tanstack/react-query';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 
 export function useSignup() {
-  const { setSession, setStatus } = useSession();
+  const { updateSession } = useUpdateSession();
 
   const {
     formState: { errors },
@@ -19,15 +19,12 @@ export function useSignup() {
     resolver: resolver(SigninSchema),
   });
 
-  const mutation = useMutation(signin, {
+  const { isLoading, mutate } = useMutation(signin, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async (user) => {
-      setSession({ user });
-      setStatus('authenticated');
-    },
+    onSuccess: updateSession,
   });
 
-  const onSubmit = handleSubmit((data) => mutation.mutate(data));
+  const onSubmit = handleSubmit((data) => mutate(data));
 
   const fields = [
     {
@@ -51,5 +48,5 @@ export function useSignup() {
     },
   ] as const;
 
-  return { errors, fields, isLoading: mutation.isLoading, onSubmit };
+  return { errors, fields, isLoading, onSubmit };
 }

@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import { resolver } from '../../../../utils/validation';
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { UpdateableUserData } from '../../../../services/user';
 import {
   UpdateableUserDataSchema,
   updateUserBySID,
 } from '../../../../api/users/sid/adapter';
-import { useSession } from '../../../../context/Session';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 
 export type UpdateForm =
   | 'username'
@@ -25,7 +25,7 @@ export function useUpdateUserBySID({
   updateForm,
   setUpdateForm,
 }: UseUpdateUserBySIDProps) {
-  const { setSession, setStatus } = useSession();
+  const { updateSession } = useUpdateSession();
 
   const {
     formState: { errors },
@@ -35,16 +35,15 @@ export function useUpdateUserBySID({
     resolver: resolver(UpdateableUserDataSchema),
   });
 
-  const mutation = useMutation(updateUserBySID, {
+  const { isLoading, mutate } = useMutation(updateUserBySID, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async (user) => {
-      setSession({ user });
-      setStatus('authenticated');
+    onSuccess: async () => {
       setUpdateForm(undefined);
+      await updateSession();
     },
   });
 
-  const onSubmit = handleSubmit((data) => mutation.mutate(data));
+  const onSubmit = handleSubmit((data) => mutate(data));
 
   const fields = [
     {
@@ -85,5 +84,5 @@ export function useUpdateUserBySID({
     },
   ] as const;
 
-  return { errors, fields, isLoading: mutation.isLoading, onSubmit };
+  return { errors, fields, isLoading, onSubmit };
 }

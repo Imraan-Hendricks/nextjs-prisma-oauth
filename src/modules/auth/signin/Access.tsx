@@ -1,15 +1,25 @@
+import { sessionQueryOptions } from '../../../api/auth/session/adapter';
 import { Loading } from '../../../components/Loading';
 import { PropsWithChildren } from 'react';
 import { Redirect } from '../../../components/Redirect';
-import { useSession } from '../../../context/Session';
+import { useQuery } from '@tanstack/react-query';
 
 export function Access({ children }: PropsWithChildren<unknown>) {
-  const { session, status } = useSession();
+  const {
+    data: session,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery(sessionQueryOptions);
 
-  if (status === 'loading') return <Loading />;
+  if (isLoading) return <Loading />;
 
-  if (status === 'authenticated' && session.user) {
-    if (session.user.newUser) return <Redirect to='/auth/new-user' />;
+  if (isError) return <Redirect to='/500' />;
+
+  if (isSuccess && session.user) {
+    if (session.user.newUser) {
+      return <Redirect to='/auth/new-user' />;
+    }
     return <Redirect to='/account/profile' />;
   }
 

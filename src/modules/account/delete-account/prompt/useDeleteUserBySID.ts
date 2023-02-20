@@ -1,19 +1,16 @@
 import { deleteUserBySID } from '../../../../api/users/sid/adapter';
-import { useMutation } from 'react-query';
-import { useSession } from '../../../../context/Session';
+import { useMutation } from '@tanstack/react-query';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 
 export function useDeleteUserBySID() {
-  const { setSession, setStatus } = useSession();
+  const { updateSession } = useUpdateSession();
 
-  const mutation = useMutation(deleteUserBySID, {
+  const { isLoading, mutate } = useMutation(deleteUserBySID, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async () => {
-      setSession({ user: undefined });
-      setStatus('unauthenticated');
-    },
+    onSuccess: updateSession,
   });
 
-  const deleteUser = () => mutation.mutate();
+  const deleteUser = () => mutate();
 
-  return { deleteUser, isLoading: mutation.isLoading };
+  return { deleteUser, isLoading };
 }

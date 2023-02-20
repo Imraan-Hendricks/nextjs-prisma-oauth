@@ -1,10 +1,20 @@
 import { Button } from '../../../../components/Button';
-import { useSession } from '../../../../context/Session';
+import { Redirect } from '../../../../components/Redirect';
+import { sessionQueryOptions } from '../../../../api/auth/session/adapter';
 import { useUpdateUserBySID } from './useUpdateUserBySID';
+import { useQuery } from '@tanstack/react-query';
 
 export function Form() {
-  const { session } = useSession();
   const { isLoading, onSubmit } = useUpdateUserBySID();
+
+  const {
+    data: session,
+    isError,
+    isLoading: sessionIsLoading,
+  } = useQuery(sessionQueryOptions);
+
+  if (sessionIsLoading) return null;
+  if (isError) return <Redirect to='/500' />;
 
   return (
     <div className='flex justify-center items-center h-screen bg-gray-50'>

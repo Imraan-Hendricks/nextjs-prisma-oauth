@@ -1,24 +1,18 @@
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { updateUserBySID } from '../../../../api/users/sid/adapter';
-import { useSession } from '../../../../context/Session';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 
 export function useUpdateUserBySID() {
-  const { setSession, setStatus } = useSession();
-
+  const { updateSession } = useUpdateSession();
   const { handleSubmit } = useForm();
 
-  const mutation = useMutation(updateUserBySID, {
+  const { isLoading, mutate } = useMutation(updateUserBySID, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async (user) => {
-      setSession({ user });
-      setStatus('authenticated');
-    },
+    onSuccess: updateSession,
   });
 
-  const onSubmit = handleSubmit((data) =>
-    mutation.mutate({ ...data, newUser: false })
-  );
+  const onSubmit = handleSubmit((data) => mutate({ ...data, newUser: false }));
 
-  return { isLoading: mutation.isLoading, onSubmit };
+  return { isLoading, onSubmit };
 }

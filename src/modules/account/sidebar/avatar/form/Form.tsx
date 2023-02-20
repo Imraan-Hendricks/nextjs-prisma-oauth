@@ -1,7 +1,9 @@
 import { CameraIcon } from '@heroicons/react/24/solid';
 import { ChangeEvent, MouseEvent, useRef } from 'react';
 import { clsx } from 'clsx';
-import { useSession } from '../../../../../context/Session';
+import { Redirect } from '../../../../../components/Redirect';
+import { sessionQueryOptions } from '../../../../../api/auth/session/adapter';
+import { useQuery } from '@tanstack/react-query';
 
 interface FormProps {
   handleFileOnChange: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
@@ -9,8 +11,12 @@ interface FormProps {
 }
 
 export function Form({ handleFileOnChange, refreshFileOnClick }: FormProps) {
-  const { session } = useSession();
   const labelRef = useRef<HTMLLabelElement | null>(null);
+
+  const { data: session, isError, isLoading } = useQuery(sessionQueryOptions);
+
+  if (isLoading) return null;
+  if (isError) return <Redirect to='/500' />;
 
   return (
     <form className='group relative w-12 h-12 sm:w-48 sm:h-48 rounded-full bg-white overflow-hidden'>

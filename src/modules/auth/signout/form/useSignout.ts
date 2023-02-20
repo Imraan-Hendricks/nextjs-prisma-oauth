@@ -1,22 +1,19 @@
 import { signout } from '../../../../api/auth/signout/adapter';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 import { useRouter } from 'next/router';
-import { useSession } from '../../../../context/Session';
 
 export function useSignout() {
   const { back } = useRouter();
-  const { setSession, setStatus } = useSession();
+  const { updateSession } = useUpdateSession();
 
-  const mutation = useMutation(signout, {
+  const { isLoading, mutate } = useMutation(signout, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async () => {
-      setSession({ user: undefined });
-      setStatus('unauthenticated');
-    },
+    onSuccess: updateSession,
   });
 
-  const signoutUser = () => mutation.mutate();
+  const signoutUser = () => mutate();
   const redirectBack = () => back();
 
-  return { signoutUser, redirectBack };
+  return { isLoading, signoutUser, redirectBack };
 }

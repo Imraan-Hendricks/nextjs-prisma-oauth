@@ -1,17 +1,20 @@
 import { clsx } from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
+import { Redirect } from '../../../../components/Redirect';
+import { sessionQueryOptions } from '../../../../api/auth/session/adapter';
 import { UpdateForm } from '../form/useUpdateUserBySID';
-import { useSession } from '../../../../context/Session';
+import { useQuery } from '@tanstack/react-query';
 
 interface InfoProps {
   setUpdateForm: Dispatch<SetStateAction<UpdateForm>>;
 }
 
 export function Info({ setUpdateForm }: InfoProps) {
-  const {
-    session: { user },
-  } = useSession();
+  const { data: session, isError, isLoading } = useQuery(sessionQueryOptions);
+
+  if (isLoading) return null;
+  if (isError) return <Redirect to='/500' />;
 
   return (
     <div className='px-5 py-12'>
@@ -24,49 +27,49 @@ export function Info({ setUpdateForm }: InfoProps) {
               {
                 name: 'username',
                 label: 'Username',
-                value: user?.username,
+                value: session.user?.username,
                 editable: true,
               },
               {
                 name: 'contactNumber',
                 label: 'Contact Number',
-                value: user?.contactNumber || 'undefined',
+                value: session.user?.contactNumber || 'undefined',
                 editable: true,
               },
               {
                 name: 'firstName',
                 label: 'First Name',
-                value: user?.firstName,
+                value: session.user?.firstName,
                 editable: true,
               },
               {
                 name: 'lastName',
                 label: 'Last Name',
-                value: user?.lastName,
+                value: session.user?.lastName,
                 editable: true,
               },
               {
                 name: undefined,
                 label: 'Email',
-                value: user?.email,
+                value: session.user?.email,
                 editable: false,
               },
               {
                 name: undefined,
                 label: 'Role',
-                value: user?.role,
+                value: session.user?.role,
                 editable: false,
               },
               {
                 name: undefined,
                 label: 'Created At',
-                value: user?.createdAt.toString(),
+                value: session.user?.createdAt.toString(),
                 editable: false,
               },
               {
                 name: undefined,
                 label: 'Updated At',
-                value: user?.updatedAt.toString(),
+                value: session.user?.updatedAt.toString(),
                 editable: false,
               },
             ] as const

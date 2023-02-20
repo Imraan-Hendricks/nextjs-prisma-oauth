@@ -41,5 +41,5 @@ next-env.d.ts
 /prisma/schema.prisma
 
 # custom
-/src/utils/env-utils.ts
-/src/lib/utils/env-utils.ts
+/src/utils/env.ts
+/src/lib/utils/env.ts

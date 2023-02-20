@@ -1,11 +1,11 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { resizeImage } from '../../../../services/image';
 import { uploadAvatarBySID } from '../../../../api/users/avatars/upload/sid/adapter';
-import { useMutation } from 'react-query';
-import { useSession } from '../../../../context/Session';
+import { useMutation } from '@tanstack/react-query';
+import { useUpdateSession } from '../../../../hooks/useUpdateSession';
 
 export function useUploadAvatarBySID() {
-  const { setSession, setStatus } = useSession();
+  const { updateSession } = useUpdateSession();
 
   const [avatar, setAvatar] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>();
@@ -28,13 +28,12 @@ export function useUploadAvatarBySID() {
     e.currentTarget.value = '';
   }
 
-  const mutation = useMutation(uploadAvatarBySID, {
+  const { isLoading, mutate } = useMutation(uploadAvatarBySID, {
     onError: (error: any) => alert(error.message),
-    onSuccess: async (user) => {
-      setSession({ user });
-      setStatus('authenticated');
+    onSuccess: async () => {
       setPreview(undefined);
       setAvatar(null);
+      await updateSession();
     },
   });
 
@@ -47,12 +46,12 @@ export function useUploadAvatarBySID() {
     if (!avatar) return;
     const formData = new FormData();
     formData.append('avatar', avatar);
-    mutation.mutate(formData);
+    mutate(formData);
   }
 
   return {
     handleFileOnChange,
-    isLoading: mutation.isLoading,
+    isLoading,
     preview,
     refreshFileOnClick,
     onCancellation,

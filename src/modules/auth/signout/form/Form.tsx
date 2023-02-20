@@ -3,7 +3,8 @@ import { Button } from '../../../../components/Button';
 import { useSignout } from './useSignout';
 
 export function Form() {
-  const { signoutUser, redirectBack } = useSignout();
+  const { isLoading, signoutUser, redirectBack } = useSignout();
+
   return (
     <div className='flex justify-center items-center h-screen bg-gray-50'>
       <div className='bg-white w-full px-5 py-24 2xl:py-32'>
@@ -15,8 +16,17 @@ export function Form() {
             <br /> Are you sure?
           </p>
           <div className='grid grid-cols-2 gap-2 w-max mx-auto'>
-            <Button onClick={redirectBack}>Back</Button>
-            <Button variant='outlined' onClick={signoutUser}>
+            <Button
+              disabled={isLoading}
+              loading={isLoading}
+              onClick={redirectBack}>
+              Back
+            </Button>
+            <Button
+              disabled={isLoading}
+              loading={isLoading}
+              variant='outlined'
+              onClick={signoutUser}>
               Sign Out
             </Button>
           </div>
