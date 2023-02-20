@@ -1,3 +1,3 @@
-import Signout from '../../modules/auth/signout';
+import Signout from '../../modules/auth/signout/page';
 
 export default Signout;

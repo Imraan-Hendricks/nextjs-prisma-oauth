@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 export default function Page() {
   const { back, push } = useRouter();
   return (
-    <>
+    <main>
       <CustomHead title='500' />
-      <div className='flex justify-center items-center min-h-screen bg-gray-50'>
+      <section className='flex justify-center items-center min-h-screen bg-gray-50'>
         <div className='bg-white w-full py-20 px-5'>
           <div className='grid gap-8 justify-items-center'>
             <ExclamationTriangleIcon className='w-32 h-32 text-blue-500' />
@@ -26,7 +26,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </section>
+    </main>
   );
 }

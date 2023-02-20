@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { Sidebar } from './sidebar/Sidebar';
+import { Sidebar } from './Sidebar';
 
 export default function Layout({ children }: PropsWithChildren<unknown>) {
   return (

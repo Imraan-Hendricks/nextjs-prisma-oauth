@@ -19,8 +19,6 @@ New users will be redirected to a special page that allows you to collect additi
 
 ### NPM Scripts:
 
----
-
 In the root directory, you can run:
 
 - npm run build: builds the application for production.
@@ -30,8 +28,6 @@ In the root directory, you can run:
 <br/>
 
 ## Usage:
-
----
 
 To get started, ensure that you have Node.js version 16.x or higher installed, then clone this repository and follow the instructions below to set up your environment and run the project locally.
 
