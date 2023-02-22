@@ -10,7 +10,7 @@ export default function Page() {
 
   if (isError) return <Redirect to='/500' />;
   if (isSuccess && session.user && session.user.newUser)
-    return <Redirect to='/auth/new-user' />;
+    return <Redirect to='/auth/new-user' replace />;
 
   return (
     <Layout>

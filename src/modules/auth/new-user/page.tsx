@@ -18,9 +18,9 @@ export default function Page() {
   if (isError) return <Redirect to='/500' />;
 
   if (isSuccess) {
-    if (!session.user) return <Redirect to='/auth/signin' />;
+    if (!session.user) return <Redirect to='/auth/signin' replace />;
     if (!session.user.newUser) {
-      return <Redirect to='/account/profile' />;
+      return <Redirect to='/account/profile' replace />;
     }
   }
 

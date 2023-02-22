@@ -4,12 +4,16 @@ import { FC, useEffect } from 'react';
 interface RedirectProps {
   back?: boolean;
   to?: string;
+  replace?: boolean;
 }
 
-export const Redirect: FC<RedirectProps> = ({ back, to }) => {
+export const Redirect: FC<RedirectProps> = ({ back, to, replace }) => {
   useEffect(() => {
     if (back) return Router.back();
-    if (to) Router.push(to);
-  }, [back, to]);
+    if (to) {
+      if (replace) Router.replace(to);
+      else Router.push(to);
+    }
+  }, [back, to, replace]);
   return null;
 };

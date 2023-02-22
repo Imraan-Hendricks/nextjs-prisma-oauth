@@ -19,9 +19,9 @@ export default function Page() {
 
   if (isSuccess && session.user) {
     if (session.user.newUser) {
-      return <Redirect to='/auth/new-user' />;
+      return <Redirect to='/auth/new-user' replace />;
     }
-    return <Redirect to='/account/profile' />;
+    return <Redirect to='/account/profile' replace />;
   }
 
   return (

@@ -29,21 +29,25 @@ export function Button({
         'disabled:opacity-70',
         variant === 'text' && [
           color === 'black' &&
-            'text-black bg-transparent hover:bg-gray-100 active:bg-transparent border-transparent',
+            'bg-transparent hover:bg-gray-100 disabled:hover:bg-transparent active:bg-transparent disabled:active:bg-transparent border-transparent text-black',
           color === 'blue' &&
-            'text-blue-500 bg-transparent hover:bg-gray-100 active:bg-transparent border-transparent',
+            'bg-transparent hover:bg-gray-100 disabled:hover:bg-transparent active:bg-transparent disabled:active:bg-transparent border-transparent text-blue-500',
         ],
         variant === 'contained' && [
           color === 'black' &&
-            'bg-black hover:bg-gray-800 active:bg-black text-white',
+            'bg-black hover:bg-gray-800 disabled:hover:bg-black active:bg-black disabled:active:bg-black text-white',
           color === 'blue' &&
-            'bg-blue-500 hover:bg-blue-700 active:bg-blue-500 text-white',
+            'bg-blue-500 hover:bg-blue-700 disabled:hover:bg-blue-500 active:bg-blue-500 disabled:active:bg-blue-500 text-white',
         ],
         variant === 'outlined' && [
-          color === 'black' &&
-            'border-black hover:border-gray-800 active:border-black bg-white hover:bg-gray-100 active:bg-white text-black',
-          color === 'blue' &&
-            'border-blue-500 hover:border-blue-600 active:border-blue-500 bg-white hover:bg-gray-100 active:bg-white text-blue-500',
+          color === 'black' && [
+            'bg-white hover:bg-gray-100 disabled:hover:bg-white active:bg-white disabled:active:bg-white text-black',
+            'border-black hover:border-gray-800 disabled:hover:border-black active:border-black disabled:active:border-black',
+          ],
+          color === 'blue' && [
+            'bg-white hover:bg-gray-100 disabled:hover:bg-white active:bg-white disabled:active:bg-white text-blue-500',
+            'border-blue-500 hover:border-blue-600 disabled:hover:border-blue-500 active:border-blue-500 disabled:active:border-blue-500',
+          ],
         ],
         className
       )}>

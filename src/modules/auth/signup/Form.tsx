@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { ChangeEvent, useState } from 'react';
 import { Checkbox } from '@/components/Checkbox';
+import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextField } from '@/components/TextField';
 import { useSignup } from './useSignup';
 
@@ -26,7 +28,7 @@ export function Form() {
               <Link
                 href='/auth/signin'
                 className='text-blue-600 hover:text-blue-500 cursor-pointer'>
-                Sign in Here
+                Sign in here
               </Link>
             </p>
             <p className='text-body1 text-gray-600 2xl:max-w-xl'>
@@ -34,39 +36,65 @@ export function Form() {
               laoreet mauris sagittis interdum. Morbi mi lectus, dapibus.
             </p>
           </div>
-          <form
-            onSubmit={onSubmit}
-            className='grid lg:grid-cols-2 gap-8 w-full'>
-            {fields.map((props) => (
-              <TextField key={props.name} {...props} />
-            ))}
-            <Checkbox
-              className='lg:col-span-2'
-              id='tos'
-              name='tos'
-              onChange={handleCheckboxOnChange}>
-              <label className='ml-2 text-caption'>
-                I've read and agree with the{' '}
-                <Link
-                  href={'/terms-of-service'}
-                  className='text-blue-600 hover:text-blue-500'>
-                  Terms of Services
+          <div className='grid gap-8'>
+            <form
+              onSubmit={onSubmit}
+              className='grid lg:grid-cols-2 gap-8 w-full'>
+              {fields.map((props) => (
+                <TextField key={props.name} {...props} />
+              ))}
+              <Checkbox
+                className='lg:col-span-2'
+                id='tos'
+                name='tos'
+                onChange={handleCheckboxOnChange}>
+                <label className='ml-2 text-caption'>
+                  I've read and agree with the{' '}
+                  <Link
+                    href={'/terms-of-service'}
+                    className='text-blue-600 hover:text-blue-500'>
+                    Terms of Services
+                  </Link>
+                  , and our{' '}
+                  <Link
+                    href={'/privacy-policy'}
+                    className='text-blue-600 hover:text-blue-500'>
+                    Privacy Policy
+                  </Link>
+                </label>
+              </Checkbox>
+              <Button
+                className='lg:col-span-2'
+                disabled={disabled || isLoading}
+                loading={isLoading}>
+                Subscribe
+              </Button>
+            </form>
+            <div className='grid lg:grid-cols-2 gap-8'>
+              {[
+                {
+                  icon: faFacebook,
+                  text: 'Sign In With Facebook',
+                  href: '/api/auth/oauth/facebook',
+                },
+                {
+                  icon: faGoogle,
+                  text: 'Sign In With Google',
+                  href: '/api/auth/oauth/facebook',
+                },
+              ].map(({ icon, text, href }) => (
+                <Link key={text} href={href}>
+                  <Button variant='outlined' className='w-full'>
+                    <FontAwesomeIcon
+                      className='mr-4 w-7 h-7 text-blue-500 group-hover:text-blue-600'
+                      icon={icon}
+                    />
+                    {text}
+                  </Button>
                 </Link>
-                , and our{' '}
-                <Link
-                  href={'/privacy-policy'}
-                  className='text-blue-600 hover:text-blue-500'>
-                  Privacy Policy
-                </Link>
-              </label>
-            </Checkbox>
-            <Button
-              className='lg:col-span-2'
-              disabled={disabled || isLoading}
-              loading={isLoading}>
-              Subscribe
-            </Button>
-          </form>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
