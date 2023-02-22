@@ -14,7 +14,9 @@ export function Prompt({ setIsOpen }: PromptProps) {
   const { deleteUser, isLoading } = useDeleteUserBySID();
 
   return (
-    <div ref={ref} className='bg-white p-8 grid gap-6 max-w-xl rounded-md'>
+    <div
+      ref={ref}
+      className='bg-white p-8 grid gap-6 max-w-xl rounded-md animate-[fade-in_600ms_ease]'>
       <h2 className='text-h6'>Delete account</h2>
       <hr />
       <p className='text-body2 text-gray-700'>

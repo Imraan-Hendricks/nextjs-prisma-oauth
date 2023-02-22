@@ -1,3 +1,4 @@
+import AuthLayout from '../layout';
 import { CustomHead } from '@/components/CustomHead';
 import { Form } from './Form';
 import { Loading } from '@/components/Loading';
@@ -5,7 +6,7 @@ import { Redirect } from '@/components/Redirect';
 import { sessionQueryOptions } from '@/api/auth/session/adapter';
 import { useQuery } from '@tanstack/react-query';
 
-export default function Page() {
+export default function Signup() {
   const {
     data: session,
     isError,
@@ -25,9 +26,9 @@ export default function Page() {
   }
 
   return (
-    <main>
+    <AuthLayout>
       <CustomHead title='Sign Up' />
       <Form />
-    </main>
+    </AuthLayout>
   );
 }

@@ -21,7 +21,7 @@ export function Preview({
   useClickAwayListener(ref, onCancellation);
 
   return (
-    <div ref={ref} className='grid gap-4'>
+    <div ref={ref} className='grid gap-4 animate-[fade-in_600ms_ease]'>
       <img src={preview} alt='avatar' className='rounded-full' />
       <div className='grid grid-cols-2 justify-items-center w-max mx-auto gap-4'>
         {!isLoading && (

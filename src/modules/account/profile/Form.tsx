@@ -15,7 +15,7 @@ export function Form({ updateForm, setUpdateForm }: FormProps) {
   });
 
   return (
-    <div className='w-full py-8'>
+    <div className='w-full py-8 animate-[fade-in_600ms_ease]'>
       <form onSubmit={onSubmit} className='flex justify-center'>
         {fields.map((props) => (
           <TextField key={props.name} {...props} />

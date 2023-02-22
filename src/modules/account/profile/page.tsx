@@ -10,7 +10,7 @@ import { useClickAwayListener } from '../../../hooks/useClickAwayListener';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-export default function Page() {
+export default function Profile() {
   const [updateForm, setUpdateForm] = useState<UpdateForm>();
 
   const ref = useRef<HTMLDivElement | null>(null);

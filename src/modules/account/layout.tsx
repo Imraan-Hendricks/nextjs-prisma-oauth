@@ -1,7 +1,9 @@
 import { PropsWithChildren } from 'react';
 import { Sidebar } from './Sidebar';
 
-export default function Layout({ children }: PropsWithChildren<unknown>) {
+export default function AccountLayout({
+  children,
+}: PropsWithChildren<unknown>) {
   return (
     <div className='flex flex-col sm:flex-row bg-gray-50'>
       <Sidebar />

@@ -1,15 +1,16 @@
+import ErrorLayout from '../layout';
 import { Button } from '../../../components/Button';
 import { CustomHead } from '@/components/CustomHead';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 
-export default function Page() {
+export default function Custom500() {
   const { back, push } = useRouter();
   return (
-    <main>
+    <ErrorLayout>
       <CustomHead title='500' />
-      <section className='flex justify-center items-center min-h-screen bg-gray-50'>
-        <div className='bg-white w-full py-20 px-5'>
+      <section className='flex justify-center items-center min-h-full px-5 py-8'>
+        <div className='w-full animate-[fade-in_600ms_ease]'>
           <div className='grid gap-8 justify-items-center'>
             <ExclamationTriangleIcon className='w-32 h-32 text-blue-500' />
             <h1 className='text-h4'>
@@ -20,13 +21,15 @@ export default function Page() {
               team has been informed about this and will try to resolve this
               problem as soon as possible.
             </p>
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-2 gap-2'>
               <Button onClick={() => back()}>Back</Button>
-              <Button onClick={() => push('/')}>Home</Button>
+              <Button onClick={() => push('/')} color='black'>
+                Home
+              </Button>
             </div>
           </div>
         </div>
       </section>
-    </main>
+    </ErrorLayout>
   );
 }

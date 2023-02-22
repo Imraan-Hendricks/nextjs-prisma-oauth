@@ -1,11 +1,12 @@
 import AccountLayout from '../layout';
 import { CustomHead } from '@/components/CustomHead';
 import { Loading } from '@/components/Loading';
+import { Options } from './Options';
 import { Redirect } from '@/components/Redirect';
 import { sessionQueryOptions } from '@/api/auth/session/adapter';
 import { useQuery } from '@tanstack/react-query';
 
-export default function Page() {
+export default function Settings() {
   const {
     data: session,
     isError,
@@ -27,7 +28,7 @@ export default function Page() {
   return (
     <AccountLayout>
       <CustomHead title='Settings' />
-      <section>Settings</section>
+      <Options />
     </AccountLayout>
   );
 }

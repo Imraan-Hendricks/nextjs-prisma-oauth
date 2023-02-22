@@ -1,14 +1,14 @@
 import AccountLayout from '../layout';
 import { CustomHead } from '@/components/CustomHead';
 import { Loading } from '@/components/Loading';
-import { Main } from './Main';
+import { DeleteUserAccount } from './DeleteUserAccount';
 import { Prompt } from './Prompt';
 import { Redirect } from '@/components/Redirect';
 import { sessionQueryOptions } from '@/api/auth/session/adapter';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-export default function Page() {
+export default function DeleteAccount() {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -32,7 +32,7 @@ export default function Page() {
   return (
     <AccountLayout>
       <CustomHead title='Delete Account' />
-      <Main setIsOpen={setIsOpen} />
+      <DeleteUserAccount setIsOpen={setIsOpen} />
       {isOpen && (
         <div className='fixed inset-0 h-screen w-full px-5 bg-black/70 flex justify-center items-center'>
           <Prompt setIsOpen={setIsOpen} />

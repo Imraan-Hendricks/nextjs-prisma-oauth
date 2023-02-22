@@ -3,7 +3,7 @@ import Link from 'next/link';
 export function Hero() {
   return (
     <section className='flex justify-center items-center h-full'>
-      <div className='px-5 grid gap-10 animate-[fade-in_2s_ease_forwards]'>
+      <div className='px-5 grid gap-10 animate-[fade-in_2s_ease]'>
         <div>
           <img src='/next.js-logo.svg' alt='Next.js Logo' className='mx-auto' />
         </div>
