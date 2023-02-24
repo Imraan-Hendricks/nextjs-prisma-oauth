@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
-import { useUpdateUserBySID } from './useUpdateUserBySID';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { useUpdateUserBySID } from './UpdateUserBySIDHook';
 import { useQuery } from '@tanstack/react-query';
 
 export function Form() {

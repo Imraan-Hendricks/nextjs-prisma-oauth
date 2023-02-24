@@ -4,9 +4,9 @@ import { Form } from './Form';
 import { Info } from './Info';
 import { Loading } from '@/components/Loading';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
-import { UpdateForm } from './useUpdateUserBySID';
-import { useClickAwayListener } from '../../../hooks/useClickAwayListener';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { UpdateForm } from './UpdateUserBySIDHook';
+import { useClickAwayListener } from '@/hooks/ClickAwayListenerHook';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 

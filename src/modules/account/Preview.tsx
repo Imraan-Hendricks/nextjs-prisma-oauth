@@ -1,7 +1,7 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useClickAwayListener } from '@/hooks/useClickAwayListener';
+import { useClickAwayListener } from '@/hooks/ClickAwayListenerHook';
 import { useRef } from 'react';
 
 interface PreviewProps {

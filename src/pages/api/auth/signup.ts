@@ -1,3 +1,3 @@
-import signup from '../../../api/auth/signup/router';
+import signup from '@/api/auth/signup/signup-router';
 
 export default signup;

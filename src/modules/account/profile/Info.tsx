@@ -2,8 +2,8 @@ import { clsx } from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
-import { UpdateForm } from './useUpdateUserBySID';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { UpdateForm } from './UpdateUserBySIDHook';
 import { useQuery } from '@tanstack/react-query';
 
 interface InfoProps {

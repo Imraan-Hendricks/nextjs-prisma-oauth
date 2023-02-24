@@ -1,5 +1,5 @@
 import ErrorLayout from '../layout';
-import { Button } from '../../../components/Button';
+import { Button } from '@/components/Button';
 import { CustomHead } from '@/components/CustomHead';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';

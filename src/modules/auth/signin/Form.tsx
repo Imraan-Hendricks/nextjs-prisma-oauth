@@ -5,7 +5,7 @@ import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { TextField } from '@/components/TextField';
-import { useSignup } from './useSignin';
+import { useSignup } from './SigninHook';
 
 export function Form() {
   const { fields, isLoading, onSubmit } = useSignup();

@@ -2,8 +2,8 @@ import MarketingLayout from '../layout';
 import { CustomHead } from '@/components/CustomHead';
 import { Hero } from './Hero';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
-import { useNavbar } from '@/modules/common/useNavbar';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { useNavbar } from '@/modules/common/NavbarContext';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {

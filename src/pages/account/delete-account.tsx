@@ -1,3 +1,3 @@
-import DeleteAccount from '../../modules/account/delete-account/page';
+import DeleteAccount from '@/modules/account/delete-account/page';
 
 export default DeleteAccount;

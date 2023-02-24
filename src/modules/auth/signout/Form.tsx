@@ -1,6 +1,6 @@
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { Button } from '@/components/Button';
-import { useSignout } from './useSignout';
+import { useSignout } from './SignoutHook';
 
 export function Form() {
   const { isLoading, signoutUser, redirectBack } = useSignout();

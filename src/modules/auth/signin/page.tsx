@@ -3,7 +3,7 @@ import { CustomHead } from '@/components/CustomHead';
 import { Form } from './Form';
 import { Loading } from '@/components/Loading';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Signin() {

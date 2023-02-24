@@ -1,7 +1,7 @@
 import BlogLayout from './layout';
 import { CustomHead } from '@/components/CustomHead';
 import { Posts } from './Posts';
-import { useNavbar } from '../common/useNavbar';
+import { useNavbar } from '../common/NavbarContext';
 
 export default function Blog() {
   useNavbar('/blog');

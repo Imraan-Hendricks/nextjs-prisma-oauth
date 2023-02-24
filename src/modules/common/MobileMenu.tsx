@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { clsx } from 'clsx';
-import { useNavbar } from './useNavbar';
+import { useNavbar } from './NavbarContext';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 interface MobileMenuProps {

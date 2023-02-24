@@ -1,6 +1,6 @@
 import { Form } from './Form';
 import { Preview } from './Preview';
-import { useUploadAvatarBySID } from './useUploadAvatarBySID';
+import { useUploadAvatarBySID } from './UploadAvatarBySIDHook';
 
 export function Avatar() {
   const {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { clsx } from 'clsx';
-import { HeroIcon } from '@/utils/types';
+import { HeroIcon } from '@/utils/types-utils';
 import { useRouter } from 'next/router';
 
 interface MenuProps {

@@ -4,8 +4,8 @@ import { Button } from '@/components/Button';
 import { clsx } from 'clsx';
 import { MobileMenu } from './MobileMenu';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
-import { useNavbar } from './useNavbar';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { useNavbar } from './NavbarContext';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 

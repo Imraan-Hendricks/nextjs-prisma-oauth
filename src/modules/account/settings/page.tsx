@@ -3,7 +3,7 @@ import { CustomHead } from '@/components/CustomHead';
 import { Loading } from '@/components/Loading';
 import { Options } from './Options';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Settings() {

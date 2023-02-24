@@ -1,4 +1,4 @@
-import upload from '../../../../../api/users/avatars/upload/sid/router';
+import upload from '@/api/users/avatars/upload/sid/sid-router';
 
 export const config = { api: { bodyParser: false } };
 

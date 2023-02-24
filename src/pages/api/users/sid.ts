@@ -1,3 +1,3 @@
-import user from '../../../api/users/sid/router';
+import user from '@/api/users/sid/sid-router';
 
 export default user;

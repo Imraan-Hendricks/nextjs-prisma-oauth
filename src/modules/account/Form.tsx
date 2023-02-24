@@ -2,7 +2,7 @@ import { CameraIcon } from '@heroicons/react/24/solid';
 import { ChangeEvent, MouseEvent, useRef } from 'react';
 import { clsx } from 'clsx';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/adapter';
+import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 interface FormProps {

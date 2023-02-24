@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/Checkbox';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextField } from '@/components/TextField';
-import { useSignup } from './useSignup';
+import { useSignup } from './SignupHook';
 
 export function Form() {
   const { fields, isLoading, onSubmit } = useSignup();

@@ -1,6 +1,6 @@
-import '../styles/globals.css';
+import '@/styles/globals.css';
 import { AppProps } from 'next/app';
-import { NavbarProvider } from '@/modules/common/useNavbar';
+import { NavbarProvider } from '@/modules/common/NavbarContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
