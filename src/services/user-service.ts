@@ -4,6 +4,7 @@ import {
   NoRecordError,
   NotAcceptableError,
 } from '@/utils/error-utils';
+import { LocalFile } from '@/utils/storage-utils';
 import { OAuthProvider } from '@/utils/constant-utils';
 import { prisma } from '@/utils/db-utils';
 
@@ -20,6 +21,7 @@ export async function createOAuthUser(data: {
     const { provider, providerId, ...rest } = data;
     const user = await prisma.user.create({
       data: { ...rest, auth: { create: { provider, providerId } } },
+      include: { avatar: true },
     });
 
     return user;
@@ -41,6 +43,7 @@ export async function createUser(data: {
     const { password, ...rest } = data;
     const user = await prisma.user.create({
       data: { ...rest, auth: { create: { password } } },
+      include: { avatar: true },
     });
 
     return user;
@@ -52,10 +55,10 @@ export async function createUser(data: {
 
 export async function deleteUserById(id: string) {
   try {
-    const deleteAuth = prisma.auth.delete({ where: { userId: id } });
-    const deleteUser = prisma.user.delete({ where: { id } });
-    const { 1: user } = await prisma.$transaction([deleteAuth, deleteUser]);
-
+    const user = await prisma.user.delete({
+      where: { id },
+      include: { avatar: true },
+    });
     return user;
   } catch (error) {
     if (error instanceof GenericError) throw error;
@@ -75,9 +78,23 @@ export async function isUniqueEmail(email: string) {
   }
 }
 
+export async function getAvatarByFilename(filename: string) {
+  try {
+    const avatar = await prisma.avatar.findUnique({ where: { filename } });
+    if (!avatar) throw new NoRecordError('Avatar does not exist!');
+    return avatar;
+  } catch (error) {
+    if (error instanceof GenericError) throw error;
+    throw new InternalServerError();
+  }
+}
+
 export async function getUserByEmail(email: string) {
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: { avatar: true },
+    });
     if (!user) throw new NoRecordError('User does not exist!');
     return user;
   } catch (error) {
@@ -90,7 +107,7 @@ export async function getUserInclAuthByEmail(email: string) {
   try {
     const userRecord = await prisma.user.findUnique({
       where: { email },
-      include: { auth: true },
+      include: { auth: true, avatar: true },
     });
     if (!userRecord) throw new NoRecordError('User does not exist!');
 
@@ -105,7 +122,7 @@ export async function getUserInclAuthByEmail(email: string) {
 }
 
 export interface UpdateableUserData {
-  avatar?: string;
+  avatar?: LocalFile;
   username?: string;
   firstName?: string;
   lastName?: string;
@@ -114,10 +131,29 @@ export interface UpdateableUserData {
 }
 
 export async function updateUserById(id: string, data: UpdateableUserData) {
+  const { avatar, ...userData } = data;
+
+  const avatarData = avatar
+    ? {
+        avatar: {
+          upsert: {
+            create: { ...avatar },
+            update: { ...avatar },
+          },
+        },
+      }
+    : {};
+
   try {
     const user = await prisma.user.update({
-      data,
+      data: {
+        ...userData,
+        ...avatarData,
+      },
       where: { id },
+      include: {
+        avatar: true,
+      },
     });
     return user;
   } catch (error) {

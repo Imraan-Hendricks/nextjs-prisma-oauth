@@ -1,33 +1,44 @@
 import multer from 'multer';
-import { deleteFileIfExists } from '@/utils/file-utils';
+import path from 'path';
+import { deleteFileIfExists, mkdirIfNotExists } from '@/utils/file-utils';
 import {
-  extractFilename,
   fileUpload,
+  generateFilename,
   imageFilter,
-  storage,
+  LocalFile,
+  validateMulterFile,
 } from '@/utils/storage-utils';
 import { NotAcceptableError } from '@/utils/error-utils';
 import { UPLOADS_DIRECTORY } from '@/utils/env-utils';
 
-export const uploadStaticAvatar = async (req: any, res: any) => {
+const uploadAvatar = async (req: any, res: any) => {
+  const destination = path.join(UPLOADS_DIRECTORY, 'avatars');
+  await mkdirIfNotExists(destination);
+
   const options = {
     fileFilter: imageFilter,
     limits: { fileSize: 4000000 },
-    storage: storage('avatars'),
+    storage: multer.diskStorage({
+      destination: async (req, file, cb) => cb(null, destination),
+      filename: (req, file, cb) => cb(null, generateFilename(file)),
+    }),
   };
 
   const upload = multer(options).single('avatar');
-  await fileUpload(upload)(req, res);
 
-  const file = req.file as Express.Multer.File | undefined;
+  const { file } = await fileUpload(upload)(req, res);
   if (!file) throw new NotAcceptableError('Avatar is a required field');
 
-  return file;
+  const multerFile = validateMulterFile(file);
+  const localFile: LocalFile = {
+    ...multerFile,
+    location: `/api/users/avatars/${multerFile.filename}`,
+  };
+
+  return localFile;
 };
 
-export const deleteStaticAvatar = async (image: string) => {
-  const bucketName = 'avatars';
-  const filename = extractFilename(image);
-  const filePath = `${UPLOADS_DIRECTORY}/${bucketName}/${filename}`;
-  await deleteFileIfExists(filePath);
+export const storageService = {
+  uploadAvatar,
+  deleteFileIfExists,
 };

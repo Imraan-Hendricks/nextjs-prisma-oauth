@@ -1,7 +1,5 @@
-import { User } from '@prisma/client';
+import { Session } from '@/api/auth/session/session-adapter';
 
 declare module 'iron-session' {
-  interface IronSessionData {
-    user?: User;
-  }
+  interface IronSessionData extends Session {}
 }

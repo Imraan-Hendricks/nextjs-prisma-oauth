@@ -38,6 +38,18 @@ const auth = {
   updatedAt: z.date(),
 };
 
+const file = {
+  fieldname: z.string(),
+  originalname: z.string(),
+  encoding: z.string(),
+  mimetype: z.string(),
+  size: z.number(),
+  destination: z.string(),
+  filename: z.string(),
+  path: z.string(),
+  location: z.string(),
+};
+
 const misc = {
   anyString: z.string(),
 };
@@ -51,4 +63,4 @@ export const optional = (validation: ZodString | ZodEffects<ZodString>) => {
 
 export const resolver = zodResolver;
 export const schema = z;
-export const validate = { auth, user, misc };
+export const validate = { auth, file, misc, user };

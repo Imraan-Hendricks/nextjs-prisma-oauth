@@ -1,32 +1,41 @@
 import multer from 'multer';
 import path from 'path';
-import { accessFile, mkdir } from './file-utils';
 import {
   GenericError,
   InternalServerError,
   NotAcceptableError,
+  ValidationError,
 } from './error-utils';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { randomUUID } from 'crypto';
-import { UPLOADS_DIRECTORY } from './env-utils';
+import { validate } from './validation-utils';
+import { z } from 'zod';
 
-export const extractFilename = (fileUrl: string) =>
-  fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+export interface FileUploadResult {
+  file: Express.Multer.File | undefined;
+  files:
+    | Express.Multer.File[]
+    | { [key: string]: Express.Multer.File[] }
+    | undefined;
+}
 
 export const fileUpload =
   (upload: (req: any, res: any, cb: (error: any) => void) => void) =>
-  (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
+  (req: any, res: any): Promise<FileUploadResult> =>
     new Promise((resolve, reject) => {
       upload(req, res, (error: any) => {
         if (error instanceof multer.MulterError)
           return reject(new InternalServerError(error.message));
         if (error) {
           if (error instanceof GenericError) return reject(error);
-          return reject(new InternalServerError());
+          return reject(new InternalServerError(error.message));
         }
-        resolve();
+        const result: FileUploadResult = { file: req.file, files: req.files };
+        resolve(result);
       });
     });
+
+export const generateFilename = (file: Express.Multer.File) =>
+  file.fieldname + '-' + randomUUID() + path.extname(file.originalname);
 
 export const imageFilter = (
   req: any,
@@ -40,20 +49,38 @@ export const imageFilter = (
   cb(new NotAcceptableError(`${file.fieldname} must be an image`));
 };
 
-const filenameGenerator = (file: Express.Multer.File) =>
-  file.fieldname + '-' + randomUUID() + path.extname(file.originalname);
+export interface MulterFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  destination: string;
+  filename: string;
+  path: string;
+}
 
-export const storage = (bucketName: string) =>
-  multer.diskStorage({
-    destination: async (req, file, cb) => {
-      try {
-        const destination = path.join(UPLOADS_DIRECTORY, bucketName);
-        const fileExists = await accessFile(destination);
-        if (!fileExists) await mkdir(destination);
-        cb(null, destination);
-      } catch (error: any) {
-        cb(error, '');
-      }
-    },
-    filename: (req, file, cb) => cb(null, filenameGenerator(file)),
-  });
+export interface LocalFile extends MulterFile {
+  location: string;
+}
+
+export const MulterFileSchema = z.object({
+  fieldname: validate.file.fieldname,
+  originalname: validate.file.originalname,
+  encoding: validate.file.encoding,
+  mimetype: validate.file.mimetype,
+  size: validate.file.size,
+  destination: validate.file.destination,
+  filename: validate.file.filename,
+  path: validate.file.path,
+});
+
+export function validateMulterFile(file: any) {
+  const result = MulterFileSchema.safeParse(file);
+  if (!result.success) {
+    const message = 'Error while uploading file.';
+    throw new ValidationError<MulterFile>('body', result.error, message);
+  }
+  const multerFile: MulterFile = result.data;
+  return multerFile;
+}

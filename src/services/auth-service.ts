@@ -1,3 +1,4 @@
+import { Avatar, User } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
 import {
   ForbiddenError,
@@ -8,7 +9,6 @@ import {
 import { NextApiRequest } from 'next';
 import { OAuthProvider, Provider } from '@/utils/constant-utils';
 import { Profile } from 'passport';
-import { User } from '@prisma/client';
 
 export async function comparePassword(password: string, hash: string) {
   try {
@@ -40,7 +40,10 @@ export async function hashPassword(password: string) {
   }
 }
 
-export async function login(req: NextApiRequest, user: User) {
+export async function login(
+  req: NextApiRequest,
+  user: User & { avatar: Avatar | null }
+) {
   try {
     req.session.user = user;
     await req.session.save();

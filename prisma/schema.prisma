@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id            String   @id @default(cuid())
-  avatar        String?
+  avatar        Avatar?
   username      String
   firstName     String
   lastName      String
@@ -22,9 +22,24 @@ model User {
   auth          Auth?
 }
 
+model Avatar {
+  userId       String @unique
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(cuid())
+  fieldname    String
+  originalname String
+  encoding     String
+  mimetype     String
+  size         Int
+  destination  String
+  filename     String @unique
+  path         String
+  location     String
+}
+
 model Auth {
   userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   providerId String   @id @default(cuid())
   provider   String   @default("local")
   password   String?

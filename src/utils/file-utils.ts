@@ -30,3 +30,8 @@ export const mkdir = async (path: string) => {
     throw new InternalServerError('Failed to create directory!');
   }
 };
+
+export const mkdirIfNotExists = async (path: string) => {
+  const fileExists = await accessFile(path);
+  if (!fileExists) await mkdir(path);
+};

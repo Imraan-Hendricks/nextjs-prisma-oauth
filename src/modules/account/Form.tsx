@@ -22,7 +22,7 @@ export function Form({ handleFileOnChange, refreshFileOnClick }: FormProps) {
     <form className='group relative w-12 h-12 sm:w-48 sm:h-48 rounded-full bg-white overflow-hidden'>
       {session.user?.avatar && (
         <div className='absolute inset-0 h-full z-10'>
-          <img src={session.user?.avatar} alt='avatar' />
+          <img src={session.user?.avatar.location} alt='avatar' />
         </div>
       )}
       <div className='absolute inset-0 z-20'>

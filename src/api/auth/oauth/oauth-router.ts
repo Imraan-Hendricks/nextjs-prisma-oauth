@@ -1,10 +1,10 @@
+import { Avatar, User } from '@prisma/client';
 import { handler } from '@/utils/api-utils';
 import { login } from '@/services/auth-service';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NotFoundError } from '@/utils/error-utils';
 import { OAuthProvider } from '@/utils/constant-utils';
 import { passport } from './oauth-passport';
-import { User } from '@prisma/client';
 import { withSessionRoute } from '@/utils/session-utils';
 
 function oauthSignin(req: NextApiRequest, res: NextApiResponse) {
@@ -42,7 +42,7 @@ function google(req: NextApiRequest, res: NextApiResponse) {
 function callback(req: NextApiRequest, res: NextApiResponse) {
   passport.authenticate(
     req.query.provider as OAuthProvider,
-    async (error: any, user: User, info: any) => {
+    async (error: any, user: User & { avatar: Avatar | null }, info: any) => {
       if (error)
         return res
           .status(307)

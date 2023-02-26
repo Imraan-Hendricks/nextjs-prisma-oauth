@@ -1,7 +1,9 @@
+import { Avatar, User } from '@prisma/client';
 import { UseQueryOptions } from '@tanstack/react-query';
-import { User } from '@prisma/client';
 
-export type Session = { user: User } | { user: undefined };
+export type Session = {
+  user?: User & { avatar: Avatar | null };
+};
 
 export async function fetchSession() {
   const res = await fetch(`/api/auth/session?timestamp=${Date.now()}`);

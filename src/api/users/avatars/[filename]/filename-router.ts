@@ -1,20 +1,24 @@
 import fs from 'fs';
-import { handler } from '@/utils/api-utils';
+import { getAvatarByFilename } from '@/services/user-service';
+import { handlePromise, handler } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { UPLOADS_DIRECTORY } from '@/utils/env-utils';
 import { withSessionRoute } from '@/utils/session-utils';
 
 interface GetRequest extends NextApiRequest {
   query: { filename?: string };
 }
 
-async function getAvatarByFilename(req: GetRequest, res: NextApiResponse) {
+async function getAvatarByFilenameHandler(
+  req: GetRequest,
+  res: NextApiResponse
+) {
   const { filename } = req.query;
   if (!filename) return res.status(404).end();
 
-  const bucketName = 'avatars';
-  const filePath = `${UPLOADS_DIRECTORY}/${bucketName}/${filename}`;
-  const readStream = fs.createReadStream(filePath);
+  const [error, avatar] = await handlePromise(getAvatarByFilename(filename));
+  if (error) return res.status(404).end();
+
+  const readStream = fs.createReadStream(avatar.path);
 
   readStream.on('open', () => {
     res.writeHead(200);
@@ -26,4 +30,4 @@ async function getAvatarByFilename(req: GetRequest, res: NextApiResponse) {
   });
 }
 
-export default withSessionRoute(handler({ GET: getAvatarByFilename }));
+export default withSessionRoute(handler({ GET: getAvatarByFilenameHandler }));
