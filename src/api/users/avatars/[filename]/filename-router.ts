@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { getAvatarByFilename } from '@/services/user-service';
-import { handlePromise, handler } from '@/utils/api-utils';
+import { handlePromise } from '@/utils/common-utils';
+import { handler } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withSessionRoute } from '@/utils/session-utils';
 

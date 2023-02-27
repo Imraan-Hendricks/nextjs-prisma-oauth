@@ -1,5 +1,6 @@
 import multer from 'multer';
 import path from 'path';
+import { BadRequestError } from '@/utils/error-utils';
 import { deleteFileIfExists, mkdirIfNotExists } from '@/utils/file-utils';
 import {
   fileUpload,
@@ -8,7 +9,6 @@ import {
   LocalFile,
   validateMulterFile,
 } from '@/utils/storage-utils';
-import { NotAcceptableError } from '@/utils/error-utils';
 import { UPLOADS_DIRECTORY } from '@/utils/env-utils';
 
 const uploadAvatar = async (req: any, res: any) => {
@@ -27,7 +27,7 @@ const uploadAvatar = async (req: any, res: any) => {
   const upload = multer(options).single('avatar');
 
   const { file } = await fileUpload(upload)(req, res);
-  if (!file) throw new NotAcceptableError('Avatar is a required field');
+  if (!file) throw new BadRequestError('Avatar is a required field');
 
   const multerFile = validateMulterFile(file);
   const localFile: LocalFile = {

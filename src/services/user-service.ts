@@ -1,6 +1,6 @@
 import {
+  DatabaseError,
   GenericError,
-  InternalServerError,
   NoRecordError,
   NotAcceptableError,
 } from '@/utils/error-utils';
@@ -20,14 +20,13 @@ export async function createOAuthUser(data: {
   try {
     const { provider, providerId, ...rest } = data;
     const user = await prisma.user.create({
-      data: { ...rest, auth: { create: { provider, providerId } } },
+      data: { ...rest, auth: { create: { id: providerId, provider } } },
       include: { avatar: true },
     });
 
     return user;
-  } catch (error) {
-    if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new DatabaseError('Failed to create user');
   }
 }
 
@@ -47,9 +46,8 @@ export async function createUser(data: {
     });
 
     return user;
-  } catch (error) {
-    if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new DatabaseError('Failed to create user');
   }
 }
 
@@ -60,9 +58,8 @@ export async function deleteUserById(id: string) {
       include: { avatar: true },
     });
     return user;
-  } catch (error) {
-    if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new DatabaseError('Failed to delete user');
   }
 }
 
@@ -72,9 +69,9 @@ export async function isUniqueEmail(email: string) {
       where: { email },
     }));
     if (emailExists) throw new NotAcceptableError('Email already exists');
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+    throw new DatabaseError('Failed to find user');
   }
 }
 
@@ -83,9 +80,9 @@ export async function getAvatarByFilename(filename: string) {
     const avatar = await prisma.avatar.findUnique({ where: { filename } });
     if (!avatar) throw new NoRecordError('Avatar does not exist!');
     return avatar;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+    throw new DatabaseError('Failed to find avatar');
   }
 }
 
@@ -97,9 +94,9 @@ export async function getUserByEmail(email: string) {
     });
     if (!user) throw new NoRecordError('User does not exist!');
     return user;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+    throw new DatabaseError('Failed to find user');
   }
 }
 
@@ -115,9 +112,9 @@ export async function getUserInclAuthByEmail(email: string) {
     if (!auth) throw new NoRecordError('Problem reading auth information');
 
     return { auth, ...user };
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+    throw new DatabaseError('Failed to find user');
   }
 }
 
@@ -155,9 +152,9 @@ export async function updateUserById(id: string, data: UpdateableUserData) {
         avatar: true,
       },
     });
+
     return user;
-  } catch (error) {
-    if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new DatabaseError('Failed to update user');
   }
 }

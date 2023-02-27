@@ -11,6 +11,17 @@ export class GenericError extends Error {
   }
 }
 
+export class BadRequestError extends GenericError {
+  name = 'BadRequestError';
+  status = 400;
+  message = 'Invalid data in request.';
+
+  constructor(message?: string) {
+    super(message);
+    this.message = message || this.message;
+  }
+}
+
 export class DatabaseError extends GenericError {
   name = 'DatabaseError';
   status = 500;
@@ -111,12 +122,10 @@ export class ValidationError<T> extends GenericError {
   name = 'ValidationError';
   status = 400;
   message = 'Invalid data in request.';
-  location: Location;
   errors: ZodError<T>;
 
-  constructor(location: Location, errors: ZodError<T>, message?: string) {
+  constructor(errors: ZodError<T>, message?: string) {
     super(message);
-    this.location = location;
     this.errors = errors;
     this.message = message || this.message;
   }

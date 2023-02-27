@@ -1,4 +1,3 @@
-import { resolver } from '@/utils/validation-utils';
 import {
   signin,
   SigninData,
@@ -7,6 +6,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
+import { validate } from '@/utils/validation-utils';
 
 export function useSignup() {
   const { updateSession } = useUpdateSession();
@@ -16,7 +16,7 @@ export function useSignup() {
     handleSubmit,
     register,
   } = useForm<SigninData>({
-    resolver: resolver(SigninSchema),
+    resolver: validate.resolver(SigninSchema),
   });
 
   const { isLoading, mutate } = useMutation(signin, {

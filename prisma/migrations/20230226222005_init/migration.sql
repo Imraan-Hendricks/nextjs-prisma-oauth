@@ -31,7 +31,7 @@ CREATE TABLE "Avatar" (
 -- CreateTable
 CREATE TABLE "Auth" (
     "userId" TEXT NOT NULL,
-    "providerId" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "provider" TEXT NOT NULL DEFAULT 'local',
     "password" TEXT,
     "updatedAt" DATETIME NOT NULL,

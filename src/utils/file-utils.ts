@@ -5,7 +5,7 @@ export const deleteFile = async (path: string) => {
   try {
     await fs.promises.unlink(path);
   } catch (error) {
-    throw new InternalServerError('Failed to delete file!');
+    throw new InternalServerError('Failed to delete file');
   }
 };
 
@@ -27,7 +27,7 @@ export const mkdir = async (path: string) => {
   try {
     await fs.promises.mkdir(path, { recursive: true });
   } catch (error) {
-    throw new InternalServerError('Failed to create directory!');
+    throw new InternalServerError('Failed to create directory');
   }
 };
 

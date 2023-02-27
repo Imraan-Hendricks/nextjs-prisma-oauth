@@ -29,12 +29,3 @@ export const handler =
       res.status(500).json(new InternalServerError());
     }
   };
-
-export const handlePromise = async <T>(promise: Promise<T>) => {
-  try {
-    const data = await promise;
-    return [undefined, data] as const;
-  } catch (error: unknown) {
-    return [error, undefined as Awaited<T>] as const;
-  }
-};

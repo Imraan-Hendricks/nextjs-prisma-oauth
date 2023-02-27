@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Avatar, User } from '@prisma/client';
 
 export const uploadAvatarBySID = async (data: FormData) => {
   const res = await fetch('/api/users/avatars/upload/sid', {
@@ -9,6 +9,6 @@ export const uploadAvatarBySID = async (data: FormData) => {
     body: data,
   });
   if (!res.ok) throw await res.json();
-  const user: User = await res.json();
+  const user: User & { avatar: Avatar | null } = await res.json();
   return user;
 };

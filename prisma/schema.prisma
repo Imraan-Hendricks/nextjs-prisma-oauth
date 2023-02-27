@@ -38,10 +38,10 @@ model Avatar {
 }
 
 model Auth {
-  userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  providerId String   @id @default(cuid())
-  provider   String   @default("local")
-  password   String?
-  updatedAt  DateTime @updatedAt
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  provider  String   @default("local")
+  password  String?
+  updatedAt DateTime @updatedAt
 }

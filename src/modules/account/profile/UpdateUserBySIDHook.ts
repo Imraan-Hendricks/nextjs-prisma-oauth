@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import { resolver } from '@/utils/validation-utils';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { UpdateableUserData } from '@/services/user-service';
@@ -8,6 +7,7 @@ import {
   updateUserBySID,
 } from '@/api/users/sid/sid-adapter';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
+import { validate } from '@/utils/validation-utils';
 
 export type UpdateForm =
   | 'username'
@@ -32,7 +32,7 @@ export function useUpdateUserBySID({
     handleSubmit,
     register,
   } = useForm<UpdateableUserData>({
-    resolver: resolver(UpdateableUserDataSchema),
+    resolver: validate.resolver(UpdateableUserDataSchema),
   });
 
   const { isLoading, mutate } = useMutation(updateUserBySID, {

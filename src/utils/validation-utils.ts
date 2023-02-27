@@ -54,13 +54,19 @@ const misc = {
   anyString: z.string(),
 };
 
-export const optional = (validation: ZodString | ZodEffects<ZodString>) => {
+const optional = (validation: ZodString | ZodEffects<ZodString>) => {
   return z
     .union([validation, z.string().length(0)])
     .optional()
     .transform((e) => (e === '' ? undefined : e));
 };
 
-export const resolver = zodResolver;
-export const schema = z;
-export const validate = { auth, file, misc, user };
+export const validate = {
+  auth,
+  file,
+  misc,
+  object: z.object,
+  optional,
+  resolver: zodResolver,
+  user,
+};

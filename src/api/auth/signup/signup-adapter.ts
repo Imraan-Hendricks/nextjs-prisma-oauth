@@ -1,5 +1,5 @@
-import { optional, schema, validate } from '@/utils/validation-utils';
-import { User } from '@prisma/client';
+import { Avatar, User } from '@prisma/client';
+import { validate } from '@/utils/validation-utils';
 import { ValidationError } from '@/utils/error-utils';
 
 export interface SignupData {
@@ -12,15 +12,15 @@ export interface SignupData {
   confirmPassword?: string;
 }
 
-export const SignupSchema = schema
+export const SignupSchema = validate
   .object({
     username: validate.user.username,
     firstName: validate.user.firstName,
     lastName: validate.user.lastName,
     email: validate.user.email,
-    contactNumber: optional(validate.user.contactNumber),
+    contactNumber: validate.optional(validate.user.contactNumber),
     password: validate.auth.password,
-    confirmPassword: optional(validate.auth.confirmPassword),
+    confirmPassword: validate.optional(validate.auth.confirmPassword),
   })
   .refine(
     (data) =>
@@ -34,8 +34,7 @@ export const SignupSchema = schema
 
 export function validateSignupData(data: any) {
   const result = SignupSchema.safeParse(data);
-  if (!result.success)
-    throw new ValidationError<SignupData>('body', result.error);
+  if (!result.success) throw new ValidationError<SignupData>(result.error);
   return result.data;
 }
 
@@ -49,6 +48,6 @@ export const signup = async (data: SignupData) => {
     body: JSON.stringify(data),
   });
   if (!res.ok) throw await res.json();
-  const user: User = await res.json();
+  const user: User & { avatar: Avatar | null } = await res.json();
   return user;
 };

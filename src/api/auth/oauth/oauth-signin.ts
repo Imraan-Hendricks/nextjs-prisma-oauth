@@ -9,7 +9,7 @@ import {
   InternalServerError,
   NoRecordError,
 } from '@/utils/error-utils';
-import { handlePromise } from '@/utils/api-utils';
+import { handlePromise } from '@/utils/common-utils';
 import { Profile } from 'passport';
 
 export const signin = async (
@@ -36,6 +36,6 @@ export const signin = async (
     cb(null, user);
   } catch (error: unknown) {
     if (error instanceof GenericError) return cb(error);
-    cb(new InternalServerError());
+    cb(new InternalServerError('Failed to signin user'));
   }
 };

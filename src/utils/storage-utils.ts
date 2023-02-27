@@ -8,7 +8,6 @@ import {
 } from './error-utils';
 import { randomUUID } from 'crypto';
 import { validate } from './validation-utils';
-import { z } from 'zod';
 
 export interface FileUploadResult {
   file: Express.Multer.File | undefined;
@@ -64,7 +63,7 @@ export interface LocalFile extends MulterFile {
   location: string;
 }
 
-export const MulterFileSchema = z.object({
+export const MulterFileSchema = validate.object({
   fieldname: validate.file.fieldname,
   originalname: validate.file.originalname,
   encoding: validate.file.encoding,
@@ -79,7 +78,7 @@ export function validateMulterFile(file: any) {
   const result = MulterFileSchema.safeParse(file);
   if (!result.success) {
     const message = 'Error while uploading file.';
-    throw new ValidationError<MulterFile>('body', result.error, message);
+    throw new ValidationError<MulterFile>(result.error, message);
   }
   const multerFile: MulterFile = result.data;
   return multerFile;

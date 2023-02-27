@@ -14,9 +14,9 @@ export async function comparePassword(password: string, hash: string) {
   try {
     if (!(await compare(password, hash)))
       throw new ForbiddenError('Incorrect password');
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof GenericError) throw error;
-    throw new InternalServerError();
+    throw new InternalServerError('Failed to compare passwords');
   }
 }
 
@@ -35,8 +35,8 @@ export async function hashPassword(password: string) {
   try {
     const hashedPassword = await hash(password, 10);
     return hashedPassword;
-  } catch (error) {
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new InternalServerError('Failed to hash password');
   }
 }
 
@@ -47,8 +47,8 @@ export async function login(
   try {
     req.session.user = user;
     await req.session.save();
-  } catch (error) {
-    throw new InternalServerError();
+  } catch (error: any) {
+    throw new InternalServerError('Failed to login user');
   }
 }
 
