@@ -4,8 +4,8 @@ import { Form } from './Form';
 import { Info } from './Info';
 import { Loading } from '@/components/Loading';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
-import { UpdateForm } from './UpdateUserBySIDHook';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
+import { UpdateForm } from './useUpdateUserBySid';
 import { useClickAwayListener } from '@/hooks/ClickAwayListenerHook';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -21,7 +21,7 @@ export default function Profile() {
     isError,
     isLoading,
     isSuccess,
-  } = useQuery(sessionQueryOptions);
+  } = useQuery(sessionAdapter.get.getOptions());
 
   if (isLoading) return <Loading />;
 

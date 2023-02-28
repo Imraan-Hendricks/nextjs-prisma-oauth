@@ -1,3 +1,3 @@
-import session from '@/api/auth/session/session-router';
+import { sessionRouter } from '@/api/auth/session/session-router';
 
-export default session;
+export default sessionRouter;

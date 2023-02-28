@@ -1,9 +1,11 @@
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { Button } from '@/components/Button';
 import { useSignout } from './SignoutHook';
+import { useRouter } from 'next/router';
 
 export function Form() {
-  const { isLoading, signoutUser, redirectBack } = useSignout();
+  const { isLoading, signoutUser } = useSignout();
+  const { back } = useRouter();
 
   return (
     <section className='flex justify-center items-center min-h-full px-5 py-8'>
@@ -15,7 +17,7 @@ export function Form() {
           <br /> Are you sure?
         </p>
         <div className='grid grid-cols-2 gap-2 w-max mx-auto'>
-          <Button onClick={redirectBack}>Back</Button>
+          <Button onClick={back}>Back</Button>
           <Button
             color='black'
             disabled={isLoading}

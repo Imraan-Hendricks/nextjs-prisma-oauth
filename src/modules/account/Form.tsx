@@ -2,7 +2,7 @@ import { CameraIcon } from '@heroicons/react/24/solid';
 import { ChangeEvent, MouseEvent, useRef } from 'react';
 import { clsx } from 'clsx';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 interface FormProps {
@@ -13,7 +13,11 @@ interface FormProps {
 export function Form({ handleFileOnChange, refreshFileOnClick }: FormProps) {
   const labelRef = useRef<HTMLLabelElement | null>(null);
 
-  const { data: session, isError, isLoading } = useQuery(sessionQueryOptions);
+  const {
+    data: session,
+    isError,
+    isLoading,
+  } = useQuery(sessionAdapter.get.getOptions());
 
   if (isLoading) return null;
   if (isError) return <Redirect to='/500' />;

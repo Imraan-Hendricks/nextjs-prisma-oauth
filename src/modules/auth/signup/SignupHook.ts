@@ -1,12 +1,7 @@
-import {
-  signup,
-  SignupData,
-  SignupSchema,
-} from '@/api/auth/signup/signup-adapter';
+import { SignupAdapter, signupAdapter } from '@/api/auth/signup/signup-adapter';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
-import { validate } from '@/utils/validation-utils';
 
 export function useSignup() {
   const { updateSession } = useUpdateSession();
@@ -15,11 +10,11 @@ export function useSignup() {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<SignupData>({
-    resolver: validate.resolver(SignupSchema),
+  } = useForm<SignupAdapter['post']['body']>({
+    resolver: signupAdapter.post.useResolver(),
   });
 
-  const { isLoading, mutate } = useMutation(signup, {
+  const { isLoading, mutate } = useMutation(signupAdapter.post.mutate, {
     onError: (error: any) => alert(error.message),
     onSuccess: updateSession,
   });

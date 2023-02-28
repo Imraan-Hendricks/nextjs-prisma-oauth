@@ -1,17 +1,15 @@
-import {
-  deleteUserById,
-  UpdateableUserData,
-  updateUserById,
-} from '@/services/user-service';
+import { deleteUserById, updateUserById } from '@/services/user-service';
 import { getSession, login, logout } from '@/services/auth-service';
 import { handler } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { storageService } from '@/services/storage-service';
 import { UnauthorizedError } from '@/utils/error-utils';
-import { validateUpdateableUserData } from './sid-adapter';
+import { UserBySidAdapter, userBySidAdapter } from './sid-adapter';
 import { withSessionRoute } from '@/utils/session-utils';
 
-async function deleteUserBySID(req: NextApiRequest, res: NextApiResponse) {
+type DeleteResponse = NextApiResponse<UserBySidAdapter['delete']['response']>;
+
+async function DELETE(req: NextApiRequest, res: DeleteResponse) {
   const session = getSession(req);
   if (!session.user) throw new UnauthorizedError();
 
@@ -24,15 +22,17 @@ async function deleteUserBySID(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(user);
 }
 
-interface UpdateRequest extends NextApiRequest {
-  body: UpdateableUserData;
+interface PutRequest extends NextApiRequest {
+  body: UserBySidAdapter['put']['body'];
 }
 
-async function updateUserBySID(req: UpdateRequest, res: NextApiResponse) {
+type PutResponse = NextApiResponse<UserBySidAdapter['put']['response']>;
+
+async function PUT(req: PutRequest, res: PutResponse) {
   const session = getSession(req);
   if (!session.user) throw new UnauthorizedError();
 
-  const data = validateUpdateableUserData(req.body);
+  const data = userBySidAdapter.put.validate(req.body);
   const user = await updateUserById(session.user.id, data);
 
   await login(req, user);
@@ -40,6 +40,4 @@ async function updateUserBySID(req: UpdateRequest, res: NextApiResponse) {
   res.status(200).json(user);
 }
 
-export default withSessionRoute(
-  handler({ PUT: updateUserBySID, DELETE: deleteUserBySID })
-);
+export const userBySidRouter = withSessionRoute(handler({ PUT, DELETE }));

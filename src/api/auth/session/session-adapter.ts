@@ -5,23 +5,38 @@ export type Session = {
   user?: User & { avatar: Avatar | null };
 };
 
-export async function fetchSession() {
-  const res = await fetch(`/api/auth/session?timestamp=${Date.now()}`);
-  if (!res.ok) throw await res.json();
-  const session: Session = await res.json();
-  return session;
+interface Get {
+  response: Session;
+  options: Omit<
+    UseQueryOptions<Session, unknown, Session, string[]>,
+    'initialData'
+  > & {
+    initialData?: (() => undefined) | undefined;
+  };
 }
 
-export type SessionQueryOptions = Omit<
-  UseQueryOptions<Session, unknown, Session, string[]>,
-  'initialData'
-> & {
-  initialData?: (() => undefined) | undefined;
+const get = {
+  query: async function () {
+    const res = await fetch(`/api/auth/session?timestamp=${Date.now()}`);
+    if (!res.ok) throw await res.json();
+    const session: Get['response'] = await res.json();
+    return session;
+  },
+
+  getOptions: function (): Get['options'] {
+    return {
+      queryKey: ['session'],
+      queryFn: this.query,
+      staleTime: 15 * (60 * 1000),
+      cacheTime: 24 * (60 * 60 * 1000),
+    };
+  },
 };
 
-export const sessionQueryOptions: SessionQueryOptions = {
-  queryKey: ['session'],
-  queryFn: fetchSession,
-  staleTime: 15 * (60 * 1000),
-  cacheTime: 24 * (60 * 60 * 1000),
+export interface SessionAdapter {
+  get: Get;
+}
+
+export const sessionAdapter = {
+  get,
 };

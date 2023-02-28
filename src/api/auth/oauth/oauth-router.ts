@@ -1,29 +1,11 @@
 import { Avatar, User } from '@prisma/client';
 import { handler } from '@/utils/api-utils';
 import { login } from '@/services/auth-service';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { NotFoundError } from '@/utils/error-utils';
 import { OAuthProvider } from '@/utils/constant-utils';
 import { passport } from './oauth-passport';
 import { withSessionRoute } from '@/utils/session-utils';
-
-function oauthSignin(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query;
-
-  if (!Array.isArray(slug) || slug.length < 1 || slug.length > 2)
-    throw new NotFoundError();
-
-  if (slug[0] === 'callback') {
-    req.query.provider = slug[1];
-    return callback(req, res);
-  }
-
-  const provider = slug[0];
-  if (provider === 'facebook') return facebook(req, res);
-  if (provider === 'google') return google(req, res);
-
-  throw new NotFoundError();
-}
 
 function facebook(req: NextApiRequest, res: NextApiResponse) {
   passport.authenticate('facebook', {
@@ -56,4 +38,22 @@ function callback(req: NextApiRequest, res: NextApiResponse) {
   )(req, res);
 }
 
-export default withSessionRoute(handler({ GET: oauthSignin }));
+function GET(req: NextApiRequest, res: NextApiResponse) {
+  const { slug } = req.query;
+
+  if (!Array.isArray(slug) || slug.length < 1 || slug.length > 2)
+    throw new NotFoundError();
+
+  if (slug[0] === 'callback') {
+    req.query.provider = slug[1];
+    return callback(req, res);
+  }
+
+  const provider = slug[0];
+  if (provider === 'facebook') return facebook(req, res);
+  if (provider === 'google') return google(req, res);
+
+  throw new NotFoundError();
+}
+
+export const oauthRouter = withSessionRoute(handler({ GET }));

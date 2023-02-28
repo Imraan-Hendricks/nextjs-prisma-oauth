@@ -1,17 +1,17 @@
 import { Button } from '@/components/Button';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
-import { useUpdateUserBySID } from './UpdateUserBySIDHook';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
+import { useUpdateUserBySid } from './useUpdateUserBySid';
 import { useQuery } from '@tanstack/react-query';
 
 export function Form() {
-  const { isLoading, onSubmit } = useUpdateUserBySID();
+  const { isLoading, onSubmit } = useUpdateUserBySid();
 
   const {
     data: session,
     isError,
     isLoading: sessionIsLoading,
-  } = useQuery(sessionQueryOptions);
+  } = useQuery(sessionAdapter.get.getOptions());
 
   if (sessionIsLoading) return null;
   if (isError) return <Redirect to='/500' />;

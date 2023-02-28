@@ -1,19 +1,16 @@
-import { signout } from '@/api/auth/signout/signout-adapter';
+import { signoutAdapter } from '@/api/auth/signout/signout-adapter';
 import { useMutation } from '@tanstack/react-query';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
-import { useRouter } from 'next/router';
 
 export function useSignout() {
-  const { back } = useRouter();
   const { updateSession } = useUpdateSession();
 
-  const { isLoading, mutate } = useMutation(signout, {
+  const { isLoading, mutate } = useMutation(signoutAdapter.delete.mutate, {
     onError: (error: any) => alert(error.message),
     onSuccess: updateSession,
   });
 
   const signoutUser = () => mutate();
-  const redirectBack = () => back();
 
-  return { isLoading, signoutUser, redirectBack };
+  return { isLoading, signoutUser };
 }

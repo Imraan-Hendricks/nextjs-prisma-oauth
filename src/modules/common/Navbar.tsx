@@ -4,7 +4,7 @@ import { Button } from '@/components/Button';
 import { clsx } from 'clsx';
 import { MobileMenu } from './MobileMenu';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
 import { useNavbar } from './NavbarContext';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export function Navbar({ hideLinks }: NavbarProps) {
     setIsOpen((isOpen) => !isOpen);
   }
 
-  const { data: session, isError } = useQuery(sessionQueryOptions);
+  const { data: session, isError } = useQuery(sessionAdapter.get.getOptions());
 
   if (isError) return <Redirect to='/500' />;
 

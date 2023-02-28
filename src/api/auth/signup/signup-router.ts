@@ -1,20 +1,18 @@
 import { createUser, isUniqueEmail } from '@/services/user-service';
-import { GenericError } from '@/utils/error-utils';
 import { handler } from '@/utils/api-utils';
 import { hashPassword, login } from '@/services/auth-service';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SignupData, validateSignupData } from './signup-adapter';
-import { User } from '@prisma/client';
+import { SignupAdapter, signupAdapter } from './signup-adapter';
 import { withSessionRoute } from '@/utils/session-utils';
 
-interface SignupRequest extends NextApiRequest {
-  body: SignupData;
+interface PostRequest extends NextApiRequest {
+  body: SignupAdapter['post']['body'];
 }
 
-type SignupResponse = NextApiResponse<User | GenericError>;
+type PostResponse = NextApiResponse<SignupAdapter['post']['response']>;
 
-async function signup(req: SignupRequest, res: SignupResponse) {
-  const { password, confirmPassword, ...newUser } = validateSignupData(
+async function POST(req: PostRequest, res: PostResponse) {
+  const { password, confirmPassword, ...newUser } = signupAdapter.post.validate(
     req.body
   );
 
@@ -26,4 +24,4 @@ async function signup(req: SignupRequest, res: SignupResponse) {
   res.status(200).json(user);
 }
 
-export default withSessionRoute(handler({ POST: signup }));
+export const signupRouter = withSessionRoute(handler({ POST }));

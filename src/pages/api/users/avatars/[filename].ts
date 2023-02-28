@@ -1,3 +1,3 @@
-import filename from '@/api/users/avatars/[filename]/filename-router';
+import { avatarByFilenameRouter } from '@/api/users/avatars/[filename]/filename-router';
 
-export default filename;
+export default avatarByFilenameRouter;

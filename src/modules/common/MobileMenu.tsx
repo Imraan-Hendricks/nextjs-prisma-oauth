@@ -3,7 +3,7 @@ import { Button } from '@/components/Button';
 import { clsx } from 'clsx';
 import { useNavbar } from './NavbarContext';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 
 interface MobileMenuProps {
@@ -13,7 +13,7 @@ interface MobileMenuProps {
 export function MobileMenu({ isOpen }: MobileMenuProps) {
   const { active } = useNavbar();
 
-  const { data: session, isError } = useQuery(sessionQueryOptions);
+  const { data: session, isError } = useQuery(sessionAdapter.get.getOptions());
 
   if (isError) return <Redirect to='/500' />;
 

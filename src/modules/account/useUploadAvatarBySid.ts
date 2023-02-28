@@ -1,10 +1,10 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { resizeImage } from '@/utils/image-utils';
-import { uploadAvatarBySID } from '@/api/users/avatars/upload/sid/sid-adapter';
+import { uploadAvatarBySidAdapter } from '@/api/users/avatars/upload/sid/sid-adapter';
 import { useMutation } from '@tanstack/react-query';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
 
-export function useUploadAvatarBySID() {
+export function useUploadAvatarBySid() {
   const { updateSession } = useUpdateSession();
 
   const [avatar, setAvatar] = useState<File | null>(null);
@@ -28,14 +28,17 @@ export function useUploadAvatarBySID() {
     e.currentTarget.value = '';
   }
 
-  const { isLoading, mutate } = useMutation(uploadAvatarBySID, {
-    onError: (error: any) => alert(error.message),
-    onSuccess: async () => {
-      setPreview(undefined);
-      setAvatar(null);
-      await updateSession();
-    },
-  });
+  const { isLoading, mutate } = useMutation(
+    uploadAvatarBySidAdapter.put.mutate,
+    {
+      onError: (error: any) => alert(error.message),
+      onSuccess: async () => {
+        setPreview(undefined);
+        setAvatar(null);
+        await updateSession();
+      },
+    }
+  );
 
   function onCancellation() {
     setPreview(undefined);

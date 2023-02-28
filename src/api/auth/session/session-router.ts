@@ -1,12 +1,14 @@
-import { getSession as handleGetSession } from '@/services/auth-service';
+import { getSession } from '@/services/auth-service';
 import { handler } from '@/utils/api-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Session } from './session-adapter';
+import { SessionAdapter } from './session-adapter';
 import { withSessionRoute } from '@/utils/session-utils';
 
-function getSession(req: NextApiRequest, res: NextApiResponse<Session>) {
-  const session = handleGetSession(req);
+type GetResponse = NextApiResponse<SessionAdapter['get']['response']>;
+
+function GET(req: NextApiRequest, res: GetResponse) {
+  const session = getSession(req);
   res.status(200).json(session);
 }
 
-export default withSessionRoute(handler({ GET: getSession }));
+export const sessionRouter = withSessionRoute(handler({ GET }));

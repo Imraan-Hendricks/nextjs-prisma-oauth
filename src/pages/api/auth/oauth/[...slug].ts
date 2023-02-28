@@ -1,3 +1,3 @@
-import oauth from '@/api/auth/oauth/oauth-router';
+import { oauthRouter } from '@/api/auth/oauth/oauth-router';
 
-export default oauth;
+export default oauthRouter;

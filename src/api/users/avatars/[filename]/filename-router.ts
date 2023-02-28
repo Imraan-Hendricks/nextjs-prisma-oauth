@@ -9,10 +9,7 @@ interface GetRequest extends NextApiRequest {
   query: { filename?: string };
 }
 
-async function getAvatarByFilenameHandler(
-  req: GetRequest,
-  res: NextApiResponse
-) {
+async function GET(req: GetRequest, res: NextApiResponse) {
   const { filename } = req.query;
   if (!filename) return res.status(404).end();
 
@@ -31,4 +28,4 @@ async function getAvatarByFilenameHandler(
   });
 }
 
-export default withSessionRoute(handler({ GET: getAvatarByFilenameHandler }));
+export const avatarByFilenameRouter = withSessionRoute(handler({ GET }));

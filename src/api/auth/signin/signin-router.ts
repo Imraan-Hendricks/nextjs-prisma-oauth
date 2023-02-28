@@ -3,30 +3,32 @@ import {
   ensureSameProvider,
   login,
 } from '@/services/auth-service';
-import { GenericError } from '@/utils/error-utils';
 import { getUserInclAuthByEmail } from '@/services/user-service';
 import { handler } from '@/utils/api-utils';
+import { InternalServerError } from '@/utils/error-utils';
 import { localProvider } from '@/utils/constant-utils';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SigninData, validateSigninData } from './signin-adapter';
-import { User } from '@prisma/client';
+import { SigninAdapter, signinAdapter } from './signin-adapter';
 import { withSessionRoute } from '@/utils/session-utils';
 
-interface SigninRequest extends NextApiRequest {
-  body: SigninData;
+interface PostRequest extends NextApiRequest {
+  body: SigninAdapter['post']['body'];
 }
 
-type SigninResponse = NextApiResponse<User | GenericError>;
+type PostResponse = NextApiResponse<SigninAdapter['post']['response']>;
 
-async function signin(req: SigninRequest, res: SigninResponse) {
-  const { email, password } = validateSigninData(req.body);
+async function POST(req: PostRequest, res: PostResponse) {
+  const { email, password } = signinAdapter.post.validate(req.body);
   const { auth, ...user } = await getUserInclAuthByEmail(email);
 
   ensureSameProvider(localProvider, auth.provider);
-  await comparePassword(password, auth.password as string);
+  if (!auth.password)
+    throw new InternalServerError('Failed to retrieve password');
+
+  await comparePassword(password, auth.password);
   await login(req, user);
 
   res.status(200).json(user);
 }
 
-export default withSessionRoute(handler({ POST: signin }));
+export const signinRouter = withSessionRoute(handler({ POST }));

@@ -5,8 +5,11 @@ import { storageService } from '@/services/storage-service';
 import { updateUserById } from '@/services/user-service';
 import { UnauthorizedError } from '@/utils/error-utils';
 import { withSessionRoute } from '@/utils/session-utils';
+import { UploadAvatarBySidAdapter } from './sid-adapter';
 
-async function uploadAvatarBySID(req: NextApiRequest, res: NextApiResponse) {
+type PutReponse = NextApiResponse<UploadAvatarBySidAdapter['put']['response']>;
+
+async function PUT(req: NextApiRequest, res: PutReponse) {
   const session = getSession(req);
   if (!session.user) throw new UnauthorizedError();
 
@@ -24,4 +27,4 @@ async function uploadAvatarBySID(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(user);
 }
 
-export default withSessionRoute(handler({ PUT: uploadAvatarBySID }));
+export const uploadAvatarBySidRouter = withSessionRoute(handler({ PUT }));

@@ -1,3 +1,3 @@
-import signin from '@/api/auth/signin/signin-router';
+import { signinRouter } from '@/api/auth/signin/signin-router';
 
-export default signin;
+export default signinRouter;

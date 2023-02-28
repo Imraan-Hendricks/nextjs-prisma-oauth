@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { updateUserBySID } from '@/api/users/sid/sid-adapter';
+import { userBySidAdapter } from '@/api/users/sid/sid-adapter';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
 
-export function useUpdateUserBySID() {
+export function useUpdateUserBySid() {
   const { updateSession } = useUpdateSession();
   const { handleSubmit } = useForm();
 
-  const { isLoading, mutate } = useMutation(updateUserBySID, {
+  const { isLoading, mutate } = useMutation(userBySidAdapter.put.mutate, {
     onError: (error: any) => alert(error.message),
     onSuccess: updateSession,
   });

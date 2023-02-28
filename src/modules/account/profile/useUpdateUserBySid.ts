@@ -2,12 +2,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { UpdateableUserData } from '@/services/user-service';
-import {
-  UpdateableUserDataSchema,
-  updateUserBySID,
-} from '@/api/users/sid/sid-adapter';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
-import { validate } from '@/utils/validation-utils';
+import { userBySidAdapter } from '@/api/users/sid/sid-adapter';
 
 export type UpdateForm =
   | 'username'
@@ -16,15 +12,15 @@ export type UpdateForm =
   | 'contactNumber'
   | undefined;
 
-interface UseUpdateUserBySIDProps {
+interface UseUpdateUserBySidProps {
   updateForm: UpdateForm;
   setUpdateForm: Dispatch<SetStateAction<UpdateForm | undefined>>;
 }
 
-export function useUpdateUserBySID({
+export function useUpdateUserBySid({
   updateForm,
   setUpdateForm,
-}: UseUpdateUserBySIDProps) {
+}: UseUpdateUserBySidProps) {
   const { updateSession } = useUpdateSession();
 
   const {
@@ -32,10 +28,10 @@ export function useUpdateUserBySID({
     handleSubmit,
     register,
   } = useForm<UpdateableUserData>({
-    resolver: validate.resolver(UpdateableUserDataSchema),
+    resolver: userBySidAdapter.put.useResolver(),
   });
 
-  const { isLoading, mutate } = useMutation(updateUserBySID, {
+  const { isLoading, mutate } = useMutation(userBySidAdapter.put.mutate, {
     onError: (error: any) => alert(error.message),
     onSuccess: async () => {
       setUpdateForm(undefined);

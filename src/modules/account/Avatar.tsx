@@ -1,6 +1,6 @@
 import { Form } from './Form';
 import { Preview } from './Preview';
-import { useUploadAvatarBySID } from './UploadAvatarBySIDHook';
+import { useUploadAvatarBySid } from './useUploadAvatarBySid';
 
 export function Avatar() {
   const {
@@ -10,7 +10,7 @@ export function Avatar() {
     refreshFileOnClick,
     onCancellation,
     onConfirmation,
-  } = useUploadAvatarBySID();
+  } = useUploadAvatarBySid();
 
   return (
     <div>

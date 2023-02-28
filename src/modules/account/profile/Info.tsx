@@ -2,8 +2,8 @@ import { clsx } from 'clsx';
 import { Dispatch, SetStateAction } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
-import { UpdateForm } from './UpdateUserBySIDHook';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
+import { UpdateForm } from './useUpdateUserBySid';
 import { useQuery } from '@tanstack/react-query';
 
 interface InfoProps {
@@ -11,7 +11,11 @@ interface InfoProps {
 }
 
 export function Info({ setUpdateForm }: InfoProps) {
-  const { data: session, isError, isLoading } = useQuery(sessionQueryOptions);
+  const {
+    data: session,
+    isError,
+    isLoading,
+  } = useQuery(sessionAdapter.get.getOptions());
 
   if (isLoading) return null;
   if (isError) return <Redirect to='/500' />;

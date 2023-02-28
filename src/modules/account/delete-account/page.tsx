@@ -4,7 +4,7 @@ import { Loading } from '@/components/Loading';
 import { DeleteUserAccount } from './DeleteUserAccount';
 import { Prompt } from './Prompt';
 import { Redirect } from '@/components/Redirect';
-import { sessionQueryOptions } from '@/api/auth/session/session-adapter';
+import { sessionAdapter } from '@/api/auth/session/session-adapter';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -16,7 +16,7 @@ export default function DeleteAccount() {
     isError,
     isLoading,
     isSuccess,
-  } = useQuery(sessionQueryOptions);
+  } = useQuery(sessionAdapter.get.getOptions());
 
   if (isLoading) return <Loading />;
 
