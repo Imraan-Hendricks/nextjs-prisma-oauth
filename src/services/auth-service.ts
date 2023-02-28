@@ -7,10 +7,10 @@ import {
   NotAcceptableError,
 } from '@/utils/error-utils';
 import { NextApiRequest } from 'next';
-import { OAuthProvider, Provider } from '@/utils/constant-utils';
+import { OAuthProvider } from '@/utils/validation-utils';
 import { Profile } from 'passport';
 
-export async function comparePassword(password: string, hash: string) {
+async function comparePassword(password: string, hash: string) {
   try {
     if (!(await compare(password, hash)))
       throw new ForbiddenError('Incorrect password');
@@ -20,18 +20,21 @@ export async function comparePassword(password: string, hash: string) {
   }
 }
 
-export function ensureSameProvider(provider: Provider, userProvider: string) {
+function ensureSameProvider(
+  provider: OAuthProvider | 'local',
+  userProvider: string
+) {
   if (provider === userProvider) return;
   throw new NotAcceptableError(
     'To confirm your identity, sign in with the same account you used originally.'
   );
 }
 
-export function getSession(req: NextApiRequest) {
+function getSession(req: NextApiRequest) {
   return { user: req.session.user };
 }
 
-export async function hashPassword(password: string) {
+async function hashPassword(password: string) {
   try {
     const hashedPassword = await hash(password, 10);
     return hashedPassword;
@@ -40,7 +43,7 @@ export async function hashPassword(password: string) {
   }
 }
 
-export async function login(
+async function login(
   req: NextApiRequest,
   user: User & { avatar: Avatar | null }
 ) {
@@ -52,11 +55,11 @@ export async function login(
   }
 }
 
-export function logout(req: NextApiRequest) {
+function logout(req: NextApiRequest) {
   req.session.destroy();
 }
 
-export const processProfile = (profile: Profile) => {
+const processProfile = (profile: Profile) => {
   if (
     !profile.displayName ||
     !profile.name?.givenName ||
@@ -76,4 +79,14 @@ export const processProfile = (profile: Profile) => {
     provider: profile.provider as OAuthProvider,
     providerId: profile.id,
   };
+};
+
+export const authService = {
+  comparePassword,
+  ensureSameProvider,
+  getSession,
+  hashPassword,
+  login,
+  logout,
+  processProfile,
 };

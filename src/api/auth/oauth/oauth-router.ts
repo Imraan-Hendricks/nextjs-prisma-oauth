@@ -1,9 +1,9 @@
+import { authService } from '@/services/auth-service';
 import { Avatar, User } from '@prisma/client';
 import { handler } from '@/utils/api-utils';
-import { login } from '@/services/auth-service';
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { NotFoundError } from '@/utils/error-utils';
-import { OAuthProvider } from '@/utils/constant-utils';
+import { OAuthProvider } from '@/utils/validation-utils';
 import { passport } from './oauth-passport';
 import { withSessionRoute } from '@/utils/session-utils';
 
@@ -30,7 +30,7 @@ function callback(req: NextApiRequest, res: NextApiResponse) {
           .status(307)
           .redirect(`/auth/signin?oauthError=${error.message}`);
 
-      await login(req, user);
+      await authService.login(req, user);
 
       if (user.newUser) return res.status(307).redirect('/auth/new-user');
       res.status(307).redirect('/account/profile');

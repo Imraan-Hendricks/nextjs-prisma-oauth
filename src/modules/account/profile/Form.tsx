@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { Dispatch, SetStateAction } from 'react';
 import { TextField } from '@/components/TextField';
-import { UpdateForm, useUpdateUserBySid } from './useUpdateUserBySid';
+import { UpdateForm, useUpdateUserBySid } from './updateUserBySidHook';
 
 interface FormProps {
   updateForm: UpdateForm;

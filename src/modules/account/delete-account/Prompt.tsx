@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { useClickAwayListener } from '@/hooks/ClickAwayListenerHook';
-import { useDeleteUserBySid } from './useDeleteUserBySid';
+import { useDeleteUserBySid } from './deleteUserBySidHook';
 
 interface PromptProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;

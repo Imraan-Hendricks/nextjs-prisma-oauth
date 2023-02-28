@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Redirect } from '@/components/Redirect';
 import { sessionAdapter } from '@/api/auth/session/session-adapter';
-import { UpdateForm } from './useUpdateUserBySid';
+import { UpdateForm } from './updateUserBySidHook';
 import { useQuery } from '@tanstack/react-query';
 
 interface InfoProps {

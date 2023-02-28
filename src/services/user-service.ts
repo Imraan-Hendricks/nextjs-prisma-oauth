@@ -5,39 +5,19 @@ import {
   NotAcceptableError,
 } from '@/utils/error-utils';
 import { LocalFile } from '@/utils/storage-utils';
-import { OAuthProvider } from '@/utils/constant-utils';
+import { OAuthProvider } from '@/utils/validation-utils';
 import { prisma } from '@/utils/db-utils';
 
-export async function createOAuthUser(data: {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  contactNumber?: string | undefined;
-  provider: OAuthProvider;
-  providerId: string;
-}) {
-  try {
-    const { provider, providerId, ...rest } = data;
-    const user = await prisma.user.create({
-      data: { ...rest, auth: { create: { id: providerId, provider } } },
-      include: { avatar: true },
-    });
-
-    return user;
-  } catch (error: any) {
-    throw new DatabaseError('Failed to create user');
-  }
-}
-
-export async function createUser(data: {
+interface NewUser {
   username: string;
   firstName: string;
   lastName: string;
   email: string;
   contactNumber?: string | undefined;
   password: string;
-}) {
+}
+
+async function create(data: NewUser) {
   try {
     const { password, ...rest } = data;
     const user = await prisma.user.create({
@@ -51,7 +31,26 @@ export async function createUser(data: {
   }
 }
 
-export async function deleteUserById(id: string) {
+interface NewOauthUser extends Omit<NewUser, 'password'> {
+  provider: OAuthProvider;
+  providerId: string;
+}
+
+async function createOAuth(data: NewOauthUser) {
+  try {
+    const { provider, providerId, ...rest } = data;
+    const user = await prisma.user.create({
+      data: { ...rest, auth: { create: { id: providerId, provider } } },
+      include: { avatar: true },
+    });
+
+    return user;
+  } catch (error: any) {
+    throw new DatabaseError('Failed to create user');
+  }
+}
+
+async function deleteById(id: string) {
   try {
     const user = await prisma.user.delete({
       where: { id },
@@ -63,7 +62,7 @@ export async function deleteUserById(id: string) {
   }
 }
 
-export async function isUniqueEmail(email: string) {
+async function isUniqueEmail(email: string) {
   try {
     const emailExists = !!(await prisma.user.findFirst({
       where: { email },
@@ -75,7 +74,7 @@ export async function isUniqueEmail(email: string) {
   }
 }
 
-export async function getAvatarByFilename(filename: string) {
+async function getAvatarByFilename(filename: string) {
   try {
     const avatar = await prisma.avatar.findUnique({ where: { filename } });
     if (!avatar) throw new NoRecordError('Avatar does not exist!');
@@ -86,7 +85,7 @@ export async function getAvatarByFilename(filename: string) {
   }
 }
 
-export async function getUserByEmail(email: string) {
+async function getByEmail(email: string) {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -100,7 +99,7 @@ export async function getUserByEmail(email: string) {
   }
 }
 
-export async function getUserInclAuthByEmail(email: string) {
+async function getAuthInfoByEmail(email: string) {
   try {
     const userRecord = await prisma.user.findUnique({
       where: { email },
@@ -118,7 +117,7 @@ export async function getUserInclAuthByEmail(email: string) {
   }
 }
 
-export interface UpdateableUserData {
+interface UpdateableUserData {
   avatar?: LocalFile;
   username?: string;
   firstName?: string;
@@ -127,25 +126,21 @@ export interface UpdateableUserData {
   newUser?: boolean;
 }
 
-export async function updateUserById(id: string, data: UpdateableUserData) {
+async function updateById(id: string, data: UpdateableUserData) {
   const { avatar, ...userData } = data;
-
-  const avatarData = avatar
-    ? {
-        avatar: {
-          upsert: {
-            create: { ...avatar },
-            update: { ...avatar },
-          },
-        },
-      }
-    : {};
 
   try {
     const user = await prisma.user.update({
       data: {
         ...userData,
-        ...avatarData,
+        ...(avatar && {
+          avatar: {
+            upsert: {
+              create: { ...avatar },
+              update: { ...avatar },
+            },
+          },
+        }),
       },
       where: { id },
       include: {
@@ -158,3 +153,20 @@ export async function updateUserById(id: string, data: UpdateableUserData) {
     throw new DatabaseError('Failed to update user');
   }
 }
+
+export interface UserService {
+  newUser: NewUser;
+  NewOauthUser: NewOauthUser;
+  updateableData: UpdateableUserData;
+}
+
+export const userService = {
+  createOAuth,
+  create,
+  deleteById,
+  isUniqueEmail,
+  getAvatarByFilename,
+  getByEmail,
+  getAuthInfoByEmail,
+  updateById,
+};

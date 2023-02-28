@@ -1,17 +1,10 @@
 import { Avatar, User } from '@prisma/client';
 import { validate } from '@/utils/validation-utils';
 import { ValidationError } from '@/utils/error-utils';
+import { UserService } from '@/services/user-service';
 
 interface Post {
-  body: {
-    username: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    contactNumber?: string;
-    password: string;
-    confirmPassword?: string;
-  };
+  body: UserService['newUser'] & { confirmPassword?: string };
   response: User & { avatar: Avatar | null };
 }
 

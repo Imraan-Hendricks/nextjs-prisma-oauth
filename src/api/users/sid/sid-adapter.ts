@@ -1,5 +1,5 @@
 import { Avatar, User } from '@prisma/client';
-import { UpdateableUserData } from '@/services/user-service';
+import { UserService } from '@/services/user-service';
 import { validate } from '@/utils/validation-utils';
 import { ValidationError } from '@/utils/error-utils';
 
@@ -20,7 +20,7 @@ const _delete = {
 };
 
 interface Put {
-  body: UpdateableUserData;
+  body: UserService['updateableData'];
   response: User & { avatar: Avatar | null };
 }
 

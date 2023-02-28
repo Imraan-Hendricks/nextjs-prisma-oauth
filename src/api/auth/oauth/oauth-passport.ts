@@ -1,10 +1,6 @@
 import passport, { Profile } from 'passport';
+import { authService } from '@/services/auth-service';
 import { Avatar, User } from '@prisma/client';
-import {
-  createOAuthUser,
-  getUserInclAuthByEmail,
-} from '@/services/user-service';
-import { ensureSameProvider, processProfile } from '@/services/auth-service';
 import {
   FACEBOOK_CLIENT_ID,
   FACEBOOK_CLIENT_SECRET,
@@ -20,6 +16,7 @@ import {
 import { handlePromise } from '@/utils/common-utils';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { userService } from '@/services/user-service';
 
 type Signin = (
   profile: Profile,
@@ -28,21 +25,21 @@ type Signin = (
 
 const signin: Signin = async function (profile, cb) {
   try {
-    const userProfile = processProfile(profile);
+    const userProfile = authService.processProfile(profile);
 
     const [error, userRecord] = await handlePromise(
-      getUserInclAuthByEmail(userProfile.email)
+      userService.getAuthInfoByEmail(userProfile.email)
     );
 
     if (error) {
       if (!(error instanceof NoRecordError)) throw error;
-      const user = await createOAuthUser(userProfile);
+      const user = await userService.createOAuth(userProfile);
 
       return cb(null, user);
     }
 
     const { auth, ...user } = userRecord;
-    ensureSameProvider(userProfile.provider, auth.provider);
+    authService.ensureSameProvider(userProfile.provider, auth.provider);
 
     cb(null, user);
   } catch (error: unknown) {

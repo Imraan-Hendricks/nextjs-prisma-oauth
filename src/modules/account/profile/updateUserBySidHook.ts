@@ -1,9 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { UpdateableUserData } from '@/services/user-service';
 import { useUpdateSession } from '@/hooks/UpdateSessionHook';
-import { userBySidAdapter } from '@/api/users/sid/sid-adapter';
+import {
+  UserBySidAdapter,
+  userBySidAdapter,
+} from '@/api/users/sid/sid-adapter';
 
 export type UpdateForm =
   | 'username'
@@ -27,7 +29,7 @@ export function useUpdateUserBySid({
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<UpdateableUserData>({
+  } = useForm<UserBySidAdapter['put']['body']>({
     resolver: userBySidAdapter.put.useResolver(),
   });
 

@@ -5,7 +5,7 @@ import { Info } from './Info';
 import { Loading } from '@/components/Loading';
 import { Redirect } from '@/components/Redirect';
 import { sessionAdapter } from '@/api/auth/session/session-adapter';
-import { UpdateForm } from './useUpdateUserBySid';
+import { UpdateForm } from './updateUserBySidHook';
 import { useClickAwayListener } from '@/hooks/ClickAwayListenerHook';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';

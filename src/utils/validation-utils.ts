@@ -1,7 +1,23 @@
-import { providers, roles } from './constant-utils';
 import { regex } from './regex-utils';
 import { z, ZodEffects, ZodString } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+export type Role =
+  | 'administrator'
+  | 'author'
+  | 'contributor'
+  | 'editor'
+  | 'subscriber'
+  | 'superAdmin';
+
+export const roles = [
+  'administrator',
+  'author',
+  'contributor',
+  'editor',
+  'subscriber',
+  'superAdmin',
+] as const;
 
 const user = {
   id: z.string(),
@@ -23,10 +39,13 @@ const user = {
   updatedAt: z.date(),
 };
 
+export type OAuthProvider = 'facebook' | 'google';
+export const oauthProviders = ['facebook', 'google'] as const;
+
 const auth = {
   userId: z.string(),
   providerId: z.string(),
-  provider: z.enum(providers),
+  provider: z.enum([...oauthProviders, 'local']),
   password: z
     .string()
     .min(8)
