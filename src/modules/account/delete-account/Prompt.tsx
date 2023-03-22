@@ -24,6 +24,7 @@ export function Prompt({ setIsOpen }: PromptProps) {
       </p>
       <Button
         className='w-max'
+        color='red'
         onClick={deleteUser}
         disabled={isLoading}
         loading={isLoading}>
